@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/STCraft/dragonfly/server/cmd"
+	"github.com/STCraft/dragonfly/server/player"
+	"github.com/STCraft/dragonfly/server/world"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/server/cmd"
-	"github.com/linuxtf/dragonfly/server/player"
-	"github.com/linuxtf/dragonfly/server/world"
 )
 
 type FClaimCmd struct {

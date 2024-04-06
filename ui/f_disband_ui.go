@@ -3,14 +3,13 @@ package ui
 import (
 	"fmt"
 
+	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/dragonfly/server/player"
+	"github.com/STCraft/dragonfly/server/player/form"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/factions/chat"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/libraries/broadcast"
-	"github.com/linuxtf/dragonfly/libraries/srv"
-	"github.com/linuxtf/dragonfly/server/player"
-	"github.com/linuxtf/dragonfly/server/player/form"
 )
 
 type FDisbandUI struct {
@@ -46,10 +45,10 @@ func (f FDisbandUI) Submit(submitter form.Submitter) {
 	}
 
 	p.Message(utils.Message("faction_disbanded", name))
-	broadcast.BroadcastMessage(utils.Message("broadcast_faction_disbanded", p.Name(), name))
+	dragonfly.Server.Broadcast(utils.Message("broadcast_faction_disbanded", p.Name(), name))
 
 	for _, m := range fPlayer.Faction.Members {
-		player, ok := srv.Srv.PlayerByXUID(m.Xuid)
+		player, ok := dragonfly.Server.PlayerByXUID(m.Xuid)
 
 		if !ok {
 			continue

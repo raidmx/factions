@@ -1,11 +1,11 @@
 package ui
 
 import (
+	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/dragonfly/server/player"
+	"github.com/STCraft/dragonfly/server/player/form"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/libraries/srv"
-	"github.com/linuxtf/dragonfly/server/player"
-	"github.com/linuxtf/dragonfly/server/player/form"
 )
 
 type FInviteUI struct {
@@ -40,7 +40,7 @@ func (f FInviteUI) Submit(submitter form.Submitter) {
 		return
 	}
 
-	target, ok := srv.Srv.PlayerByName(name)
+	target, ok := dragonfly.Server.PlayerByName(name)
 
 	if !ok {
 		p.Message(utils.Message("player_not_found", name))

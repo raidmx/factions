@@ -1,10 +1,10 @@
 package memory
 
 import (
+	"github.com/STCraft/dragonfly/server/player"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/factions/chat"
 	"github.com/inceptionmc/factions/postgres"
-	"github.com/linuxtf/dragonfly/server/player"
 )
 
 var FPlayers = map[string]*factions.FPlayer{}

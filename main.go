@@ -1,32 +1,24 @@
 package main
 
 import (
+	"github.com/STCraft/DFLoader/loader"
+	"github.com/STCraft/dragonfly/server"
+	"github.com/STCraft/dragonfly/server/cmd"
+	"github.com/STCraft/dragonfly/server/player"
 	"github.com/inceptionmc/factions/commands"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/postgres"
-	"github.com/linuxtf/dragonfly/libraries/console"
-	"github.com/linuxtf/dragonfly/libraries/srv"
-	"github.com/linuxtf/dragonfly/server/cmd"
-	"github.com/linuxtf/dragonfly/server/player"
 )
 
 func main() {
-	// Register Commands
 	registerCommands()
-
-	// Start the Server
-	srv.Start()
-
-	// Initiate Database
+	loader.Init()
 	postgres.Init()
 
-	// Load Faction Claims
 	c := memory.LoadClaims()
-	console.Log.Printf("[Factions] Loaded %d claims!", c)
+	server.Console.Printf("[Factions] Loaded %d claims!", c)
 
-	// Start Listening for Connections
-	for srv.Srv.Accept(onPlayerJoin) {
-	}
+	loader.Start()
 }
 
 func onPlayerJoin(p *player.Player) {

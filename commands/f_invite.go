@@ -3,12 +3,12 @@ package commands
 import (
 	"fmt"
 
+	"github.com/STCraft/dragonfly/server/cmd"
+	"github.com/STCraft/dragonfly/server/player"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/ui"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/server/cmd"
-	"github.com/linuxtf/dragonfly/server/player"
 )
 
 type FInviteCmd struct {

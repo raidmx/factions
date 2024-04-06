@@ -5,14 +5,13 @@ import (
 	"strings"
 	"time"
 
+	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/dragonfly/server/cmd"
+	"github.com/STCraft/dragonfly/server/player"
+	"github.com/STCraft/dragonfly/server/player/title"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/libraries/srv"
-	"github.com/linuxtf/dragonfly/libraries/srv/users"
-	"github.com/linuxtf/dragonfly/server/cmd"
-	"github.com/linuxtf/dragonfly/server/player"
-	"github.com/linuxtf/dragonfly/server/player/title"
 )
 
 type FPromoteCmd struct {
@@ -51,14 +50,14 @@ func (c FPromoteCmd) Run(src cmd.Source, o *cmd.Output) {
 	}
 
 	// check target
-	user := users.GetUserByName(c.Member)
+	user := db.GetFromName(c.Member)
 
 	if !ok {
 		p.Message(utils.Message("invalid_player"))
 		return
 	}
 
-	if strings.EqualFold(user.Username, p.Name()) {
+	if strings.EqualFold(user.Name, p.Name()) {
 		p.Message(utils.Message("command_usage_on_self"))
 		return
 	}
@@ -66,13 +65,13 @@ func (c FPromoteCmd) Run(src cmd.Source, o *cmd.Output) {
 	targetFMember := faction.TryGetMember(c.Member)
 
 	if targetFMember == nil {
-		p.Message(utils.Message("player_not_in_faction", user.Username))
+		p.Message(utils.Message("player_not_in_faction", user.Name))
 		return
 	}
 
 	// check if higher in hierarchy
 	if !fMember.Compare(targetFMember) {
-		p.Message(utils.Message("must_be_higher_in_hierarchy", user.Username))
+		p.Message(utils.Message("must_be_higher_in_hierarchy", user.Name))
 		return
 	}
 
@@ -108,7 +107,7 @@ func (c FPromoteCmd) Run(src cmd.Source, o *cmd.Output) {
 	faction.Broadcast(utils.Message("faction_member_promoted", targetFMember.Name, utils.RankName(newRank)))
 
 	// send title
-	targetPlayer, ok := srv.Srv.PlayerByName(user.Username)
+	targetPlayer, ok := dragonfly.Server.PlayerByName(user.Name)
 
 	if !ok {
 		return

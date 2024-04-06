@@ -1,12 +1,12 @@
 package memory
 
 import (
+	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/dragonfly/server/player"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/factions/warp"
 	"github.com/inceptionmc/factions/postgres"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/libraries/srv"
-	"github.com/linuxtf/dragonfly/server/player"
 )
 
 var Factions = map[string]*factions.Faction{}
@@ -61,7 +61,7 @@ func Faction(faction string) *factions.Faction {
 // DeleteFaction deletes the faction data both from the memory & the database
 func DeleteFaction(faction string) {
 	for _, m := range Faction(faction).Members {
-		p, ok := srv.Srv.PlayerByXUID(m.Xuid)
+		p, ok := dragonfly.Server.PlayerByXUID(m.Xuid)
 
 		if !ok {
 			return

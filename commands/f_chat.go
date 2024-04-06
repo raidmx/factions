@@ -1,12 +1,12 @@
 package commands
 
 import (
+	"github.com/STCraft/dragonfly/server/cmd"
+	"github.com/STCraft/dragonfly/server/player"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/factions/chat"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/server/cmd"
-	"github.com/linuxtf/dragonfly/server/player"
 )
 
 type FChatCmd struct {

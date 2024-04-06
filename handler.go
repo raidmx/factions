@@ -4,6 +4,13 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/dragonfly/server/block/cube"
+	"github.com/STCraft/dragonfly/server/event"
+	"github.com/STCraft/dragonfly/server/item"
+	"github.com/STCraft/dragonfly/server/player"
+	"github.com/STCraft/dragonfly/server/player/title"
+	"github.com/STCraft/dragonfly/server/world"
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/factions/board"
@@ -11,13 +18,6 @@ import (
 	"github.com/inceptionmc/factions/factions/teleport"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/libraries/broadcast"
-	"github.com/linuxtf/dragonfly/server/block/cube"
-	"github.com/linuxtf/dragonfly/server/event"
-	"github.com/linuxtf/dragonfly/server/item"
-	"github.com/linuxtf/dragonfly/server/player"
-	"github.com/linuxtf/dragonfly/server/player/title"
-	"github.com/linuxtf/dragonfly/server/world"
 )
 
 type PlayerHandler struct {
@@ -194,7 +194,7 @@ func (h *PlayerHandler) HandleChat(ctx *event.Context, message *string) {
 
 	switch fPlayer.Channel.ChannelType() {
 	case chat.Global:
-		broadcast.BroadcastMessagef(fmt.Sprintf(format, player.Name(), *message))
+		dragonfly.Server.Broadcast(fmt.Sprintf(format, player.Name(), *message))
 	case chat.Truces:
 		faction := fPlayer.Faction
 		faction.Broadcast(fmt.Sprintf(format, player.Name(), *message))

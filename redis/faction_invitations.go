@@ -5,8 +5,6 @@ import (
 	"time"
 
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/libraries/console"
-	"github.com/linuxtf/dragonfly/libraries/srv/redis"
 )
 
 // Invite sets the invite key for the player's XUID for the expiry duration
@@ -16,7 +14,7 @@ func Invite(xuid string, faction string, invitedBy string) {
 	err := redis.Conn.Set(redis.Ctx, xuid+":invitations:"+faction, invitedBy, time.Second*time.Duration(expiry)).Err()
 
 	if err != nil {
-		console.Log.Error(err)
+		panic(err)
 	}
 }
 
@@ -28,16 +26,14 @@ func AllInvites(xuid string) map[string]string {
 	keys, err := redis.Conn.Keys(redis.Ctx, xuid+":invitations:*").Result()
 
 	if err != nil {
-		console.Log.Error(err)
-		return nil
+		panic(err)
 	}
 
 	for _, k := range keys {
 		invitedBy, err := redis.Conn.Get(redis.Ctx, k).Result()
 
 		if err != nil {
-			console.Log.Error(err)
-			return nil
+			panic(err)
 		}
 
 		faction := strings.Split(k, "invitations:")[1]
@@ -52,8 +48,7 @@ func InviteExpiry(xuid string, faction string) time.Duration {
 	expiry, err := redis.Conn.TTL(redis.Ctx, xuid+":invitations:"+faction).Result()
 
 	if err != nil {
-		console.Log.Error(err)
-		return -1
+		panic(err)
 	}
 
 	return expiry

@@ -1,13 +1,10 @@
 package utils
 
 import (
-	"path"
-
 	"github.com/inceptionmc/factions/factions/chat"
-	"github.com/linuxtf/dragonfly/libraries/config"
 )
 
-var factionConfig = config.New(path.Join("configs/faction.json"))
+var factionConfig = GetConfig("faction.json")
 
 var rankIDs = map[int]string{
 	0: "recruit",

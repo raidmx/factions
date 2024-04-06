@@ -1,12 +1,12 @@
 package commands
 
 import (
+	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/dragonfly/server/cmd"
+	"github.com/STCraft/dragonfly/server/player"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/libraries/srv"
-	"github.com/linuxtf/dragonfly/server/cmd"
-	"github.com/linuxtf/dragonfly/server/player"
 )
 
 type FTruceCmd struct {
@@ -40,7 +40,7 @@ func (c FTruceCmd) Run(src cmd.Source, o *cmd.Output) {
 	}
 
 	// check if target provided is player
-	tPlayer, isPlayer := srv.Srv.PlayerByName(c.Target)
+	tPlayer, isPlayer := dragonfly.Server.PlayerByName(c.Target)
 	var targetFaction *factions.Faction
 
 	if isPlayer {

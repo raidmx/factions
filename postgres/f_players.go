@@ -1,16 +1,16 @@
 package postgres
 
 import (
+	"github.com/STCraft/DFLoader/db"
+	"github.com/STCraft/dragonfly/server/player"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/factions/chat"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/libraries/srv/postgres"
-	"github.com/linuxtf/dragonfly/server/player"
 )
 
 // FPlayer returns the data from the database
 func FPlayer(p *player.Player) (fPlayer *factions.FPlayer, faction string) {
-	rows := postgres.Query(`SELECT FACTION, CHANNEL FROM FPLAYERS WHERE XUID = $1`, p.XUID())
+	rows := db.DB.Query(`SELECT FACTION, CHANNEL FROM FPLAYERS WHERE XUID = $1`, p.XUID())
 
 	if rows.Next() {
 		var fac, channel string
@@ -36,7 +36,7 @@ func SaveFPlayer(fPlayer *factions.FPlayer) {
 		fName = faction.Name
 	}
 
-	postgres.Exec(`INSERT INTO FPLAYERS(XUID, FACTION, CHANNEL) VALUES($1, $2, $3)`, fPlayer.Player.XUID(), fName, chat.ChannelID(fPlayer.Channel))
+	db.DB.Exec(`INSERT INTO FPLAYERS(XUID, FACTION, CHANNEL) VALUES($1, $2, $3)`, fPlayer.Player.XUID(), fName, chat.ChannelID(fPlayer.Channel))
 }
 
 // UpdateFPlayer updates the player data into the Database
@@ -48,11 +48,11 @@ func UpdateFPlayer(fPlayer *factions.FPlayer) {
 		fName = faction.Name
 	}
 
-	postgres.Exec(`UPDATE FPLAYERS SET FACTION = $1, CHANNEL = $2 where XUID = $3`, fName, chat.ChannelID(fPlayer.Channel), fPlayer.Player.XUID())
+	db.DB.Exec(`UPDATE FPLAYERS SET FACTION = $1, CHANNEL = $2 where XUID = $3`, fName, chat.ChannelID(fPlayer.Channel), fPlayer.Player.XUID())
 }
 
 // FPlayerExists returns whether the player data exists for a player
 func FPlayerExists(xuid string) bool {
-	rows := postgres.Query(`SELECT * FROM FPLAYERS WHERE XUID = $1`, xuid)
+	rows := db.DB.Query(`SELECT * FROM FPLAYERS WHERE XUID = $1`, xuid)
 	return rows.Next()
 }

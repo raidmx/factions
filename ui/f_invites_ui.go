@@ -3,11 +3,11 @@ package ui
 import (
 	"fmt"
 
+	"github.com/STCraft/dragonfly/server/player"
+	"github.com/STCraft/dragonfly/server/player/form"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/redis"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/server/player"
-	"github.com/linuxtf/dragonfly/server/player/form"
 )
 
 type FInvitesUI struct{}

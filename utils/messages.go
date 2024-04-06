@@ -1,14 +1,11 @@
 package utils
 
-import (
-	"path"
+import "fmt"
 
-	"github.com/linuxtf/dragonfly/libraries/config"
-)
-
-var messages = config.New(path.Join("configs", "messages.json"))
+var messages = GetConfig("messages.json")
 
 // Message returns the formatted message
 func Message(message string, args ...any) string {
-	return messages.Message(message, args...)
+	msg := messages.String(message)
+	return fmt.Sprintf(msg, args...)
 }

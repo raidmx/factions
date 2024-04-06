@@ -3,10 +3,10 @@ package ui
 import (
 	"fmt"
 
+	"github.com/STCraft/dragonfly/server/player"
+	"github.com/STCraft/dragonfly/server/player/form"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/server/player"
-	"github.com/linuxtf/dragonfly/server/player/form"
 )
 
 var temporary = map[string]*factions.Faction{}

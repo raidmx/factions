@@ -1,12 +1,6 @@
 package utils
 
-import (
-	"path"
-
-	"github.com/linuxtf/dragonfly/libraries/config"
-)
-
-var enchantments = config.New(path.Join("configs", "enchantments.json"))
+var enchantments = GetConfig("enchantments.json")
 
 // EnchantmentName returns the enchantment name
 func EnchantmentName(key string) string {

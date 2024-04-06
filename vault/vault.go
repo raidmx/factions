@@ -1,8 +1,8 @@
 package vault
 
 import (
-	"github.com/linuxtf/dragonfly/server/item"
-	"github.com/linuxtf/dragonfly/server/player"
+	"github.com/STCraft/dragonfly/server/item"
+	"github.com/STCraft/dragonfly/server/player"
 )
 
 // Vault is an e-chest that works the same way as enderchest does.

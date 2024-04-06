@@ -5,13 +5,13 @@ import (
 	"strings"
 	"time"
 
+	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/dragonfly/server/block/cube"
+	"github.com/STCraft/dragonfly/server/player"
+	"github.com/STCraft/dragonfly/server/player/title"
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/inceptionmc/factions/factions/home"
 	"github.com/inceptionmc/factions/factions/warp"
-	"github.com/linuxtf/dragonfly/libraries/srv"
-	"github.com/linuxtf/dragonfly/server/block/cube"
-	"github.com/linuxtf/dragonfly/server/player"
-	"github.com/linuxtf/dragonfly/server/player/title"
 )
 
 type Faction struct {
@@ -196,7 +196,7 @@ func (f *Faction) OnlineMembers() []*player.Player {
 	members := []*player.Player{}
 
 	for _, m := range f.Members {
-		if p, ok := srv.Srv.PlayerByXUID(m.Xuid); ok {
+		if p, ok := dragonfly.Server.PlayerByXUID(m.Xuid); ok {
 			members = append(members, p)
 		}
 	}
@@ -243,7 +243,7 @@ func (f *Faction) Broadcast(message string) {
 // BroadcastManagers broadcasts a message to all the Faction Managers and higher
 func (f *Faction) BroadcastManagers(message string) {
 	for _, m := range f.Members {
-		if p, ok := srv.Srv.PlayerByXUID(m.Xuid); ok {
+		if p, ok := dragonfly.Server.PlayerByXUID(m.Xuid); ok {
 			if m.Rank < Manager {
 				continue
 			}

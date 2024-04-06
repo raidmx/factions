@@ -1,12 +1,6 @@
 package utils
 
-import (
-	"path"
-
-	"github.com/linuxtf/dragonfly/libraries/config"
-)
-
-var enchantmentRarities = config.New(path.Join("configs", "enchantment_rarities.json"))
+var enchantmentRarities = GetConfig("enchantment_rarities.json")
 
 // EnchantmentRarityName returns the enchantment rarity name
 func EnchantmentRarityName(key string) string {

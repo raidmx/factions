@@ -3,12 +3,12 @@ package factions
 import (
 	"math"
 
+	"github.com/STCraft/dragonfly/server/block/cube"
+	"github.com/STCraft/dragonfly/server/player"
+	"github.com/STCraft/dragonfly/server/world"
 	"github.com/inceptionmc/factions/factions/chat"
 	"github.com/inceptionmc/factions/redis"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/server/block/cube"
-	"github.com/linuxtf/dragonfly/server/player"
-	"github.com/linuxtf/dragonfly/server/world"
 )
 
 type FPlayer struct {

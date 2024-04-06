@@ -3,11 +3,11 @@ package commands
 import (
 	"fmt"
 
+	"github.com/STCraft/dragonfly/server/cmd"
+	"github.com/STCraft/dragonfly/server/player"
 	"github.com/inceptionmc/factions/factions/board"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/server/cmd"
-	"github.com/linuxtf/dragonfly/server/player"
 )
 
 type FMapCmd struct {

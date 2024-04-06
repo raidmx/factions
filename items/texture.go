@@ -3,8 +3,6 @@ package items
 import (
 	"image"
 	"os"
-
-	"github.com/linuxtf/dragonfly/libraries/console"
 )
 
 // texture returns the texture of a custom item
@@ -12,15 +10,13 @@ func texture(id string) image.Image {
 	imgFile, err := os.Open("./textures/" + id)
 
 	if err != nil {
-		console.Log.Error(err)
-		return nil
+		panic(err)
 	}
 
 	img, _, err := image.Decode(imgFile)
 
 	if err != nil {
-		console.Log.Error(err)
-		return nil
+		panic(err)
 	}
 
 	return img.(image.Image)

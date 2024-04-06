@@ -3,12 +3,11 @@ package commands
 import (
 	"strings"
 
+	"github.com/STCraft/dragonfly/server/cmd"
+	"github.com/STCraft/dragonfly/server/player"
 	"github.com/inceptionmc/factions/factions"
 	"github.com/inceptionmc/factions/memory"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/libraries/srv/users"
-	"github.com/linuxtf/dragonfly/server/cmd"
-	"github.com/linuxtf/dragonfly/server/player"
 )
 
 type FRecruitCmd struct {
@@ -48,14 +47,14 @@ func (c FRecruitCmd) Run(src cmd.Source, o *cmd.Output) {
 	}
 
 	// check target
-	user := users.GetUserByName(c.Member)
+	user := db.GetFromName(c.Member)
 
 	if !ok {
 		p.Message(utils.Message("invalid_player"))
 		return
 	}
 
-	if strings.EqualFold(user.Username, p.Name()) {
+	if strings.EqualFold(user.Name, p.Name()) {
 		p.Message(utils.Message("command_usage_on_self"))
 		return
 	}
@@ -63,7 +62,7 @@ func (c FRecruitCmd) Run(src cmd.Source, o *cmd.Output) {
 	targetFMember := faction.TryGetMember(c.Member)
 
 	if targetFMember == nil {
-		p.Message(utils.Message("player_not_in_faction", user.Username))
+		p.Message(utils.Message("player_not_in_faction", user.Name))
 		return
 	}
 
@@ -71,6 +70,6 @@ func (c FRecruitCmd) Run(src cmd.Source, o *cmd.Output) {
 	targetFMember.Rank = newRank
 	rank = utils.RankName(newRank)
 
-	p.Message(utils.Message("faction_rank_changed", user.Username, rank))
-	faction.Broadcast(utils.Message("broadcast_faction_rank_changed", p.Name(), user.Username, rank))
+	p.Message(utils.Message("faction_rank_changed", user.Name, rank))
+	faction.Broadcast(utils.Message("broadcast_faction_rank_changed", p.Name(), user.Name, rank))
 }

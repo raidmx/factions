@@ -2,16 +2,17 @@ package utils
 
 import (
 	"fmt"
-	"path"
-
-	"github.com/linuxtf/dragonfly/libraries/config"
 )
 
-var toasts = config.New(path.Join("configs", "toasts.json"))
+var toasts = GetConfig("toasts.json")
 
 // GetToast parses and returns a toast from a config file.
 func GetToast(key string) (title string, content string) {
-	return toasts.Toast(key)
+	object := toasts.Config(key)
+	title = object.String("title")
+	content = object.String("content")
+
+	return
 }
 
 // ToastTitle parses and returns the toast title from the config

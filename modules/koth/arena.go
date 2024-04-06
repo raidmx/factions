@@ -1,9 +1,9 @@
 package koth
 
 import (
-	"github.com/linuxtf/dragonfly/server/block/cube"
-	"github.com/linuxtf/dragonfly/server/player"
-	"github.com/linuxtf/dragonfly/server/world"
+	"github.com/STCraft/dragonfly/server/block/cube"
+	"github.com/STCraft/dragonfly/server/player"
+	"github.com/STCraft/dragonfly/server/world"
 )
 
 // KothArena is the arena where the KoTH event takes place.

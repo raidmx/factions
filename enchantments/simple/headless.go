@@ -1,9 +1,9 @@
 package simple
 
 import (
+	"github.com/STCraft/dragonfly/server/item"
+	"github.com/STCraft/dragonfly/server/world"
 	"github.com/inceptionmc/factions/utils"
-	"github.com/linuxtf/dragonfly/server/item"
-	"github.com/linuxtf/dragonfly/server/world"
 )
 
 type Headless struct{}
