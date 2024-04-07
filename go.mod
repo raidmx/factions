@@ -3,8 +3,8 @@ module github.com/STCraft/Factions
 go 1.22.2
 
 require (
-	github.com/STCraft/DFLoader v0.0.0-20240407134321-0e3440c92ff9
-	github.com/STCraft/dragonfly v0.0.0-20240407102235-67c00ced3c12
+	github.com/STCraft/DFLoader v0.0.0-20240407142005-14096b9799cf
+	github.com/STCraft/dragonfly v0.0.0-20240407141911-ef1402095357
 	github.com/go-gl/mathgl v1.1.0
 	github.com/lib/pq v1.10.9
 )
