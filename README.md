@@ -1,2 +1,2 @@
 # Factions
-mi fektion kore mi worked on for motnhs. hop u like dis. plz star it2
+Highly customisable Factions Core written for Minecraft: Bedrock Edition in Go
