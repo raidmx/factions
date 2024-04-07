@@ -19,9 +19,9 @@ func main() {
 
 	loader.Init() // Intiialise the dragonfly server
 
-	postgres.Init()                                                 // Initialise our tables in the PostgreSQL database
-	registerCommands()                                              // Register all our commands
-	dragonfly.Server.RegisterHandler("factions", &FactionHandler{}) // Register Faction Handler
+	postgres.Init()                                                // Initialise our tables in the PostgreSQL database
+	registerCommands()                                             // Register all our commands
+	dragonfly.Server.RegisterHandler("factions", FactionHandler{}) // Register Faction Handler
 
 	c := memory.LoadClaims()
 	server.Console.SendMessage("[Factions] Loaded %d claims!", c)

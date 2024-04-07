@@ -1,7 +1,7 @@
-github.com/STCraft/DFLoader v0.0.0-20240407142005-14096b9799cf h1:pEXYKXw45Itp44S6mMiH/1Akx6ObvxFy0Gsn8YH9lys=
-github.com/STCraft/DFLoader v0.0.0-20240407142005-14096b9799cf/go.mod h1:IFJXBifbuC5v+GLUANtElYjMEPsSC/9Ocmr7bB/TFf8=
-github.com/STCraft/dragonfly v0.0.0-20240407141911-ef1402095357 h1:jRDw1g0eco4aKCq5UEPc4ftV4+ziYpvKBHbm7xf4UIw=
-github.com/STCraft/dragonfly v0.0.0-20240407141911-ef1402095357/go.mod h1:gKwvqzKbqjHX23VnU+ImffT4iMB7XQOaFmTfy0D4yd4=
+github.com/STCraft/DFLoader v0.0.0-20240407174626-845dcd8c85e7 h1:a7gQT1050ZLgPMcH74UUPy8Hq1Dm2h5fy/jT3ncuKvE=
+github.com/STCraft/DFLoader v0.0.0-20240407174626-845dcd8c85e7/go.mod h1:6kakU4ZaHW+Bs2GlDykwHf9j2YjG49IIVwrkK6BmFVY=
+github.com/STCraft/dragonfly v0.0.0-20240407173542-fdb224221e86 h1:O06thhFzO/Zo5fT8lSV9h3BPvezczrllMDCaorSvsFM=
+github.com/STCraft/dragonfly v0.0.0-20240407173542-fdb224221e86/go.mod h1:gKwvqzKbqjHX23VnU+ImffT4iMB7XQOaFmTfy0D4yd4=
 github.com/brentp/intintmap v0.0.0-20190211203843-30dc0ade9af9 h1:/G0ghZwrhou0Wq21qc1vXXMm/t/aKWkALWwITptKbE0=
 github.com/brentp/intintmap v0.0.0-20190211203843-30dc0ade9af9/go.mod h1:TOk10ahXejq9wkEaym3KPRNeuR/h5Jx+s8QRWIa2oTM=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=

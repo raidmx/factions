@@ -26,14 +26,18 @@ type FactionHandler struct {
 	p *player.Player
 }
 
+// New ...
+func (h FactionHandler) New(p *player.Player) player.Handler {
+	return FactionHandler{p: p}
+}
+
 // HandleJoin ...
-func (h *FactionHandler) HandleJoin(ctx *event.Context, p *player.Player) {
-	h.p = p
-	memory.LoadFPlayer(p)
+func (h FactionHandler) HandleJoin(ctx *event.Context) {
+	memory.LoadFPlayer(h.p)
 }
 
 // HandleQuit ...
-func (h *FactionHandler) HandleQuit() {
+func (h FactionHandler) HandleQuit() {
 	fPlayer := memory.FPlayer(h.p)
 	faction := fPlayer.Faction
 
@@ -50,7 +54,7 @@ func (h *FactionHandler) HandleQuit() {
 }
 
 // HandleMove ...
-func (h *FactionHandler) HandleMove(ctx *event.Context, newPos mgl64.Vec3, newYaw, newPitch float64) {
+func (h FactionHandler) HandleMove(ctx *event.Context, newPos mgl64.Vec3, newYaw, newPitch float64) {
 	// check if player was teleporting
 	if teleport.IsTeleporting(h.p) {
 		data := teleport.GetTeleportationData(h.p)
@@ -107,7 +111,7 @@ func (h *FactionHandler) HandleMove(ctx *event.Context, newPos mgl64.Vec3, newYa
 }
 
 // HandleBlockBreak ...
-func (h *FactionHandler) HandleBlockBreak(ctx *event.Context, pos cube.Pos, drops *[]item.Stack, xp *int) {
+func (h FactionHandler) HandleBlockBreak(ctx *event.Context, pos cube.Pos, drops *[]item.Stack, xp *int) {
 	p := h.p
 	w := p.World()
 
@@ -126,7 +130,7 @@ func (h *FactionHandler) HandleBlockBreak(ctx *event.Context, pos cube.Pos, drop
 }
 
 // HandleBlockPlace ...
-func (h *FactionHandler) HandleBlockPlace(ctx *event.Context, pos cube.Pos, b world.Block) {
+func (h FactionHandler) HandleBlockPlace(ctx *event.Context, pos cube.Pos, b world.Block) {
 	p := h.p
 	w := p.World()
 
@@ -145,7 +149,7 @@ func (h *FactionHandler) HandleBlockPlace(ctx *event.Context, pos cube.Pos, b wo
 }
 
 // HandleAttackEntity ...
-func (h *FactionHandler) HandleAttackEntity(ctx *event.Context, e world.Entity, force, height *float64, critical *bool) {
+func (h FactionHandler) HandleAttackEntity(ctx *event.Context, e world.Entity, force, height *float64, critical *bool) {
 	p := h.p
 	t, ok := e.(*player.Player)
 
@@ -187,7 +191,7 @@ func (h *FactionHandler) HandleAttackEntity(ctx *event.Context, e world.Entity, 
 }
 
 // HandleChat ...
-func (h *FactionHandler) HandleChat(ctx *event.Context, message *string) {
+func (h FactionHandler) HandleChat(ctx *event.Context, message *string) {
 	player := h.p
 	fPlayer := memory.FPlayer(player)
 
