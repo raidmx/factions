@@ -1,10 +1,10 @@
 package commands
 
 import (
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/memory"
 	"github.com/STCraft/dragonfly/server/cmd"
 	"github.com/STCraft/dragonfly/server/player"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FHomeCmd struct {
@@ -15,28 +15,28 @@ func (FHomeCmd) Run(src cmd.Source, o *cmd.Output) {
 	p, ok := src.(*player.Player)
 
 	if !ok {
-		o.Print(utils.Message("command_usage_by_console"))
+		o.Print(config.Message("command_usage_by_console"))
 		return
 	}
 
 	fPlayer := memory.FPlayer(p)
 
 	if fPlayer.Faction == nil {
-		p.Message(utils.Message("must_be_in_a_faction"))
+		p.Message(config.Message("must_be_in_a_faction"))
 		return
 	}
 
 	fMember := fPlayer.GetFMember()
 	faction := fPlayer.Faction
 
-	if !utils.RankHasPermission(utils.RankID(fMember.Rank), "home") {
-		mustBeRank := utils.RankWithNativePermission("home")
-		p.Message(utils.Message("must_be_" + mustBeRank))
+	if !config.RankHasPermission(config.RankID(fMember.Rank), "home") {
+		mustBeRank := config.RankWithNativePermission("home")
+		p.Message(config.Message("must_be_" + mustBeRank))
 		return
 	}
 
 	if faction.Home == nil {
-		p.Message(utils.Message("faction_has_no_home"))
+		p.Message(config.Message("faction_has_no_home"))
 		return
 	}
 

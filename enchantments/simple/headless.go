@@ -1,23 +1,23 @@
 package simple
 
 import (
+	"github.com/STCraft/Factions/config"
 	"github.com/STCraft/dragonfly/server/item"
 	"github.com/STCraft/dragonfly/server/world"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type Headless struct{}
 
 func (Headless) Name() string {
-	return utils.EnchantmentName("headless")
+	return config.EnchantmentName("headless")
 }
 
 func (Headless) MaxLevel() int {
-	return utils.MaxEnchantmentLevel("headless")
+	return config.MaxEnchantmentLevel("headless")
 }
 
 func (Headless) Cost(level int) (int, int) {
-	return utils.MinEnchantmentCost("headless"), utils.MaxEnchantmentCost("headless")
+	return config.MinEnchantmentCost("headless"), config.MaxEnchantmentCost("headless")
 }
 
 func (Headless) Rarity() item.EnchantmentRarity {

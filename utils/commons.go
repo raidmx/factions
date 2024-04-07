@@ -1,6 +1,9 @@
 package utils
 
-import "sync"
+import (
+	"encoding/json"
+	"sync"
+)
 
 // Substring returns a part of the string specified
 func Substring(input string, start int, length int) string {
@@ -25,4 +28,15 @@ func LenSyncMap(m *sync.Map) int {
 		return true
 	})
 	return i
+}
+
+// Encode encodes the provided value into JSON and returns it
+func Encode(val any) string {
+	json, err := json.MarshalIndent(val, "", "  ")
+
+	if err != nil {
+		panic(err)
+	}
+
+	return string(json)
 }

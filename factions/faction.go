@@ -6,12 +6,12 @@ import (
 	"time"
 
 	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/Factions/factions/home"
+	"github.com/STCraft/Factions/factions/warp"
 	"github.com/STCraft/dragonfly/server/block/cube"
 	"github.com/STCraft/dragonfly/server/player"
 	"github.com/STCraft/dragonfly/server/player/title"
 	"github.com/go-gl/mathgl/mgl64"
-	"github.com/inceptionmc/factions/factions/home"
-	"github.com/inceptionmc/factions/factions/warp"
 )
 
 type Faction struct {

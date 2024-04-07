@@ -1,9 +1,9 @@
 package home
 
 import (
+	"github.com/STCraft/Factions/factions/teleport"
 	"github.com/STCraft/dragonfly/server/block/cube"
 	"github.com/STCraft/dragonfly/server/player"
-	"github.com/inceptionmc/factions/factions/teleport"
 )
 
 type Home struct {

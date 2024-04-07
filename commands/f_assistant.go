@@ -3,12 +3,12 @@ package commands
 import (
 	"strings"
 
-	"github.com/STCraft/DFLoader/db"
+	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/memory"
 	"github.com/STCraft/dragonfly/server/cmd"
 	"github.com/STCraft/dragonfly/server/player"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FAssistantCmd struct {
@@ -22,7 +22,7 @@ func (c FAssistantCmd) Run(src cmd.Source, o *cmd.Output) {
 
 	// check if console
 	if !ok {
-		o.Print(utils.Message("command_usage_by_console"))
+		o.Print(config.Message("command_usage_by_console"))
 		return
 	}
 
@@ -30,47 +30,47 @@ func (c FAssistantCmd) Run(src cmd.Source, o *cmd.Output) {
 
 	// check if faction exists
 	if fPlayer.Faction == nil {
-		p.Message(utils.Message("must_be_in_a_faction"))
+		p.Message(config.Message("must_be_in_a_faction"))
 		return
 	}
 
 	faction := fPlayer.Faction
 	fMember := fPlayer.GetFMember()
-	rank := utils.RankID(fMember.Rank)
+	rank := config.RankID(fMember.Rank)
 	newRank := factions.Assistant
 
 	// check if has permission
-	if !utils.RankHasPermission(rank, "assistant") {
-		mustBeRank := utils.RankWithNativePermission("assistant")
-		p.Message(utils.Message("must_be_" + mustBeRank))
+	if !config.RankHasPermission(rank, "assistant") {
+		mustBeRank := config.RankWithNativePermission("assistant")
+		p.Message(config.Message("must_be_" + mustBeRank))
 
 		return
 	}
 
 	// check target
-	user := db.GetUserFromName(c.Member)
+	user := dragonfly.UserFromName(c.Member)
 
 	if user == nil {
-		p.Message(utils.Message("invalid_player"))
+		p.Message(config.Message("invalid_player"))
 		return
 	}
 
 	if strings.EqualFold(user.Name, p.Name()) {
-		p.Message(utils.Message("command_usage_on_self"))
+		p.Message(config.Message("command_usage_on_self"))
 		return
 	}
 
 	targetFMember := faction.TryGetMember(c.Member)
 
 	if targetFMember == nil {
-		p.Message(utils.Message("player_not_in_faction", user.Name))
+		p.Message(config.Message("player_not_in_faction", user.Name))
 		return
 	}
 
 	// set the rank
 	targetFMember.Rank = newRank
-	rank = utils.RankName(newRank)
+	rank = config.RankName(newRank)
 
-	p.Message(utils.Message("faction_rank_changed", user.Name, rank))
-	faction.Broadcast(utils.Message("broadcast_faction_rank_changed", p.Name(), user.Name, rank))
+	p.Message(config.Message("faction_rank_changed", user.Name, rank))
+	faction.Broadcast(config.Message("broadcast_faction_rank_changed", p.Name(), user.Name, rank))
 }

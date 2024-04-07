@@ -1,10 +1,10 @@
 package commands
 
 import (
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/memory"
 	"github.com/STCraft/dragonfly/server/cmd"
 	"github.com/STCraft/dragonfly/server/player"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FKickCmd struct {
@@ -17,40 +17,40 @@ func (c FKickCmd) Run(src cmd.Source, o *cmd.Output) {
 	p, ok := src.(*player.Player)
 
 	if !ok {
-		o.Print(utils.Message("command_usage_by_console"))
+		o.Print(config.Message("command_usage_by_console"))
 		return
 	}
 
 	fPlayer := memory.FPlayer(p)
 
 	if fPlayer.Faction == nil {
-		p.Message(utils.Message("must_be_in_a_faction"))
+		p.Message(config.Message("must_be_in_a_faction"))
 		return
 	}
 
 	fMember := fPlayer.GetFMember()
 	faction := fPlayer.Faction
 
-	if !utils.RankHasPermission(utils.RankID(fMember.Rank), "kick") {
-		mustBeRank := utils.RankWithNativePermission("kick")
-		p.Message(utils.Message("must_be_" + mustBeRank))
+	if !config.RankHasPermission(config.RankID(fMember.Rank), "kick") {
+		mustBeRank := config.RankWithNativePermission("kick")
+		p.Message(config.Message("must_be_" + mustBeRank))
 		return
 	}
 
 	if len(c.Target) > 1 {
-		p.Message(utils.Message("more_than_one_target"))
+		p.Message(config.Message("more_than_one_target"))
 		return
 	}
 
 	target := c.Target[0].(*player.Player)
 
 	if target.XUID() == p.XUID() {
-		p.Message(utils.Message("command_usage_on_self"))
+		p.Message(config.Message("command_usage_on_self"))
 		return
 	}
 
 	if !faction.IsMember(target) {
-		p.Message(utils.Message("player_not_in_faction", target.Name()))
+		p.Message(config.Message("player_not_in_faction", target.Name()))
 		return
 	}
 
@@ -58,7 +58,7 @@ func (c FKickCmd) Run(src cmd.Source, o *cmd.Output) {
 	targetFMember := targetFPlayer.GetFMember()
 
 	if !fMember.Compare(targetFMember) {
-		p.Message(utils.Message("must_be_higher_in_hierarchy", target.Name()))
+		p.Message(config.Message("must_be_higher_in_hierarchy", target.Name()))
 		return
 	}
 
@@ -66,8 +66,8 @@ func (c FKickCmd) Run(src cmd.Source, o *cmd.Output) {
 	faction.RemoveMember(target)
 	targetFPlayer.LeaveFaction()
 
-	p.Message(utils.Message("kicked_member", target.Name()))
-	faction.Broadcast(utils.Message("broadcast_kicked_member", p.Name(), target.Name()))
+	p.Message(config.Message("kicked_member", target.Name()))
+	faction.Broadcast(config.Message("broadcast_kicked_member", p.Name(), target.Name()))
 
-	target.Message(utils.Message("kicked_from_faction", fPlayer.Faction.Name))
+	target.Message(config.Message("kicked_from_faction", fPlayer.Faction.Name))
 }

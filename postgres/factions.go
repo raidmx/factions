@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/STCraft/DFLoader/db"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/factions/home"
-	"github.com/inceptionmc/factions/factions/warp"
+	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/factions/home"
+	"github.com/STCraft/Factions/factions/warp"
+	"github.com/STCraft/Factions/utils"
 )
 
 // Faction returns the Faction Data from the database
 func Faction(faction string) *factions.Faction {
-	rows := db.DB.Query(`SELECT * FROM FACTIONS WHERE NAME = $1`, faction)
+	rows := dragonfly.DBQuery(`SELECT * FROM "FACTIONS" WHERE "NAME" = $1`, faction)
 
 	if rows.Next() {
 		var name, desc, a, t, e, l, m, h, w, s string
@@ -53,21 +54,21 @@ func Faction(faction string) *factions.Faction {
 
 // SaveFaction saves the faction data into the Database
 func SaveFaction(faction *factions.Faction) {
-	db.DB.Exec(`INSERT INTO FACTIONS(NAME, DESCRIPTION, ALLIES, TRUCES, ENEMIES, LEADER, MEMBERS, HOME, WARPS, STORAGE) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)`, faction.Name, faction.Description, commons.Encode(faction.Allies), commons.Encode(faction.Truces), commons.Encode(faction.Enemies), commons.Encode(faction.Leader), commons.Encode(faction.Members), commons.Encode(faction.Home), commons.Encode(faction.Warps), commons.Encode(faction.Storage))
+	dragonfly.DBExec(`INSERT INTO "FACTIONS" ("NAME", "DESCRIPTION", "ALLIES", "TRUCES", "ENEMIES", "LEADER", "MEMBERS", "HOME", "WARPS", "STORAGE") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)`, faction.Name, faction.Description, utils.Encode(faction.Allies), utils.Encode(faction.Truces), utils.Encode(faction.Enemies), utils.Encode(faction.Leader), utils.Encode(faction.Members), utils.Encode(faction.Home), utils.Encode(faction.Warps), utils.Encode(faction.Storage))
 }
 
 // UpdateFaction saves the faction data into the Database
 func UpdateFaction(faction *factions.Faction) {
-	db.DB.Exec(`UPDATE FACTIONS SET DESCRIPTION = $1, ALLIES = $2, TRUCES = $3, ENEMIES = $4, LEADER = $5, MEMBERS = $6, HOME = $7, WARPS = $8 WHERE NAME = $9`, faction.Description, commons.Encode(faction.Allies), commons.Encode(faction.Truces), commons.Encode(faction.Enemies), commons.Encode(faction.Leader), commons.Encode(faction.Members), commons.Encode(faction.Home), commons.Encode(faction.Warps), faction.Name)
+	dragonfly.DBExec(`UPDATE "FACTIONS" SET "DESCRIPTION" = $1, "ALLIES" = $2, "TRUCES" = $3, "ENEMIES" = $4, "LEADER" = $5, "MEMBERS" = $6, "HOME" = $7, "WARPS" = $8 WHERE NAME = $9`, faction.Description, utils.Encode(faction.Allies), utils.Encode(faction.Truces), utils.Encode(faction.Enemies), utils.Encode(faction.Leader), utils.Encode(faction.Members), utils.Encode(faction.Home), utils.Encode(faction.Warps), faction.Name)
 }
 
 // DeleteFaction clears the faction data from the database
 func DeleteFaction(faction string) {
-	db.DB.Exec(`DELETE FROM FACTIONS WHERE NAME = $1`, faction)
+	dragonfly.DBExec(`DELETE FROM "FACTIONS" WHERE "NAME" = $1`, faction)
 }
 
 // FactionExists returns whether a Faction with a name exists
 func FactionExists(faction string) bool {
-	rows := db.DB.Query(`SELECT NAME FROM FACTIONS WHERE LOWER(NAME) = $1`, strings.ToLower(faction))
+	rows := dragonfly.DBQuery(`SELECT "NAME" FROM "FACTIONS" WHERE LOWER("NAME") = $1`, strings.ToLower(faction))
 	return rows.Next()
 }

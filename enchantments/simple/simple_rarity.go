@@ -1,17 +1,17 @@
 package simple
 
-import "github.com/inceptionmc/factions/utils"
+import "github.com/STCraft/Factions/config"
 
 type SimpleRarity struct{}
 
 func (SimpleRarity) Name() string {
-	return utils.EnchantmentRarityName("simple")
+	return config.EnchantmentRarityName("simple")
 }
 
 func (SimpleRarity) Cost() int {
-	return utils.EnchantmentRarityCost("simple")
+	return config.EnchantmentRarityCost("simple")
 }
 
 func (SimpleRarity) Weight() int {
-	return utils.EnchantmentRarityWeight("simple")
+	return config.EnchantmentRarityWeight("simple")
 }

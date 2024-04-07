@@ -4,12 +4,12 @@ import (
 	"fmt"
 
 	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/factions/chat"
+	"github.com/STCraft/Factions/memory"
 	"github.com/STCraft/dragonfly/server/player"
 	"github.com/STCraft/dragonfly/server/player/form"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/factions/chat"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FDisbandUI struct {
@@ -18,7 +18,7 @@ type FDisbandUI struct {
 
 // NewDisbandUI ...
 func NewFDisbandUI(faction string) form.Form {
-	data := utils.GetUI("f_disband_ui")
+	data := config.GetUI("f_disband_ui")
 	input := data["input"].(map[string]any)
 
 	return form.New(
@@ -40,12 +40,12 @@ func (f FDisbandUI) Submit(submitter form.Submitter) {
 
 	fPlayer := memory.FPlayer(p)
 	if fPlayer.Faction.Name != name {
-		p.Message(utils.Message("faction_name_does_not_match"))
+		p.Message(config.Message("faction_name_does_not_match"))
 		return
 	}
 
-	p.Message(utils.Message("faction_disbanded", name))
-	dragonfly.Server.Broadcast(utils.Message("broadcast_faction_disbanded", p.Name(), name))
+	p.Message(config.Message("faction_disbanded", name))
+	dragonfly.Server.Broadcast(config.Message("broadcast_faction_disbanded", p.Name(), name))
 
 	for _, m := range fPlayer.Faction.Members {
 		player, ok := dragonfly.Server.PlayerByXUID(m.Xuid)
@@ -55,7 +55,7 @@ func (f FDisbandUI) Submit(submitter form.Submitter) {
 		}
 
 		if m.Rank != factions.Leader {
-			player.Message(utils.Message("broadcast_faction_members_disbanded"))
+			player.Message(config.Message("broadcast_faction_members_disbanded"))
 		}
 
 		fPlayer := memory.FPlayer(player)

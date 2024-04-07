@@ -1,11 +1,11 @@
 package commands
 
 import (
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/memory"
+	"github.com/STCraft/Factions/ui"
 	"github.com/STCraft/dragonfly/server/cmd"
 	"github.com/STCraft/dragonfly/server/player"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/ui"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FInfoCmd struct {
@@ -18,7 +18,7 @@ func (c FInfoCmd) Run(src cmd.Source, o *cmd.Output) {
 	p, ok := src.(*player.Player)
 
 	if !ok {
-		o.Print(utils.Message("command_usage_by_console"))
+		o.Print(config.Message("command_usage_by_console"))
 		return
 	}
 
@@ -28,7 +28,7 @@ func (c FInfoCmd) Run(src cmd.Source, o *cmd.Output) {
 
 	if !ok {
 		if fPlayer.Faction == nil {
-			p.Message(utils.Message("faction_not_found"))
+			p.Message(config.Message("faction_not_found"))
 			return
 		}
 
@@ -36,7 +36,7 @@ func (c FInfoCmd) Run(src cmd.Source, o *cmd.Output) {
 	}
 
 	if faction == nil {
-		p.Message(utils.Message("faction_not_found"))
+		p.Message(config.Message("faction_not_found"))
 		return
 	}
 

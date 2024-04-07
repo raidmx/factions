@@ -1,23 +1,23 @@
 package simple
 
 import (
+	"github.com/STCraft/Factions/config"
 	"github.com/STCraft/dragonfly/server/item"
 	"github.com/STCraft/dragonfly/server/world"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type Obliterate struct{}
 
 func (Obliterate) Name() string {
-	return utils.EnchantmentName("obliterate")
+	return config.EnchantmentName("obliterate")
 }
 
 func (Obliterate) MaxLevel() int {
-	return utils.MaxEnchantmentLevel("obliterate")
+	return config.MaxEnchantmentLevel("obliterate")
 }
 
 func (Obliterate) Cost(level int) (int, int) {
-	return utils.MinEnchantmentCost("obliterate"), utils.MaxEnchantmentCost("obliterate")
+	return config.MinEnchantmentCost("obliterate"), config.MaxEnchantmentCost("obliterate")
 }
 
 func (Obliterate) Rarity() item.EnchantmentRarity {

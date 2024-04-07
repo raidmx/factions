@@ -1,13 +1,12 @@
-module github.com/inceptionmc/factions
+module github.com/STCraft/Factions
 
 go 1.22.2
 
 require (
-	github.com/STCraft/DFLoader v0.0.0-20240406215122-3b5785431e63
-	github.com/STCraft/dragonfly v0.0.0-20240406210504-73f3f5e0f8fa
+	github.com/STCraft/DFLoader v0.0.0-20240407093914-4193f59bcb5f
+	github.com/STCraft/dragonfly v0.0.0-20240407091208-0d9e52d7f3f3
 	github.com/go-gl/mathgl v1.1.0
 	github.com/lib/pq v1.10.9
-	github.com/sandertv/gophertunnel v1.36.0
 )
 
 require (
@@ -24,6 +23,7 @@ require (
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/sandertv/go-raknet v1.13.0 // indirect
+	github.com/sandertv/gophertunnel v1.36.0 // indirect
 	github.com/segmentio/fasthash v1.0.3 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	golang.org/x/crypto v0.22.0 // indirect
@@ -34,3 +34,5 @@ require (
 	golang.org/x/sys v0.19.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 )
+
+replace github.com/STCraft/DFLoader => ../DFLoader

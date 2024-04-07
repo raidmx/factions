@@ -6,12 +6,12 @@ import (
 	"time"
 
 	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/memory"
 	"github.com/STCraft/dragonfly/server/cmd"
 	"github.com/STCraft/dragonfly/server/player"
 	"github.com/STCraft/dragonfly/server/player/title"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FPromoteCmd struct {
@@ -25,7 +25,7 @@ func (c FPromoteCmd) Run(src cmd.Source, o *cmd.Output) {
 
 	// check if console
 	if !ok {
-		o.Print(utils.Message("command_usage_by_console"))
+		o.Print(config.Message("command_usage_by_console"))
 		return
 	}
 
@@ -33,78 +33,78 @@ func (c FPromoteCmd) Run(src cmd.Source, o *cmd.Output) {
 
 	// check if faction exists
 	if fPlayer.Faction == nil {
-		p.Message(utils.Message("must_be_in_a_faction"))
+		p.Message(config.Message("must_be_in_a_faction"))
 		return
 	}
 
 	faction := fPlayer.Faction
 	fMember := fPlayer.GetFMember()
-	rank := utils.RankID(fMember.Rank)
+	rank := config.RankID(fMember.Rank)
 
 	// check if has permission
-	if !utils.RankHasPermission(rank, "promote") {
-		mustBeRank := utils.RankWithNativePermission("promote")
-		p.Message(utils.Message("must_be_" + mustBeRank))
+	if !config.RankHasPermission(rank, "promote") {
+		mustBeRank := config.RankWithNativePermission("promote")
+		p.Message(config.Message("must_be_" + mustBeRank))
 
 		return
 	}
 
 	// check target
-	user := db.GetFromName(c.Member)
+	user := dragonfly.UserFromName(c.Member)
 
 	if !ok {
-		p.Message(utils.Message("invalid_player"))
+		p.Message(config.Message("invalid_player"))
 		return
 	}
 
 	if strings.EqualFold(user.Name, p.Name()) {
-		p.Message(utils.Message("command_usage_on_self"))
+		p.Message(config.Message("command_usage_on_self"))
 		return
 	}
 
 	targetFMember := faction.TryGetMember(c.Member)
 
 	if targetFMember == nil {
-		p.Message(utils.Message("player_not_in_faction", user.Name))
+		p.Message(config.Message("player_not_in_faction", user.Name))
 		return
 	}
 
 	// check if higher in hierarchy
 	if !fMember.Compare(targetFMember) {
-		p.Message(utils.Message("must_be_higher_in_hierarchy", user.Name))
+		p.Message(config.Message("must_be_higher_in_hierarchy", user.Name))
 		return
 	}
 
 	// check if rank is validated
 	newRank := targetFMember.Successor()
-	officersMax := int(utils.GetFactionConfig[float64]("number_of_officers"))
-	managersMax := int(utils.GetFactionConfig[float64]("number_of_managers"))
-	coleadersMax := int(utils.GetFactionConfig[float64]("number_of_coleaders"))
+	officersMax := int(config.GetFactionConfig[float64]("number_of_officers"))
+	managersMax := int(config.GetFactionConfig[float64]("number_of_managers"))
+	coleadersMax := int(config.GetFactionConfig[float64]("number_of_coleaders"))
 
 	switch newRank {
 	case factions.Officer:
 		if len(faction.MembersWithRank(newRank))+1 == officersMax {
-			p.Message(utils.Message("max_officers", fmt.Sprint(officersMax)))
+			p.Message(config.Message("max_officers", fmt.Sprint(officersMax)))
 			return
 		}
 	case factions.Manager:
 		if len(faction.MembersWithRank(newRank))+1 == managersMax {
-			p.Message(utils.Message("max_managers", fmt.Sprint(managersMax)))
+			p.Message(config.Message("max_managers", fmt.Sprint(managersMax)))
 			return
 		}
 	case factions.CoLeader:
 		if len(faction.MembersWithRank(newRank))+1 == coleadersMax {
-			p.Message(utils.Message("max_coleaders", fmt.Sprint(coleadersMax)))
+			p.Message(config.Message("max_coleaders", fmt.Sprint(coleadersMax)))
 			return
 		}
 	case factions.Leader:
-		p.Message(utils.Message("cannot_promote_to_leader"))
+		p.Message(config.Message("cannot_promote_to_leader"))
 		return
 	}
 
 	// promote
 	fMember.Rank = newRank
-	faction.Broadcast(utils.Message("faction_member_promoted", targetFMember.Name, utils.RankName(newRank)))
+	faction.Broadcast(config.Message("faction_member_promoted", targetFMember.Name, config.RankName(newRank)))
 
 	// send title
 	targetPlayer, ok := dragonfly.Server.PlayerByName(user.Name)
@@ -113,11 +113,11 @@ func (c FPromoteCmd) Run(src cmd.Source, o *cmd.Output) {
 		return
 	}
 
-	titleData := utils.TitleData("promoted")
+	titleData := config.TitleData("promoted")
 	fadeIn := time.Duration(titleData["fadeIn"].(float64)) * time.Second
 	fadeOut := time.Duration(titleData["fadeOut"].(float64)) * time.Second
 	stay := time.Duration(titleData["stay"].(float64)) * time.Second
 
-	title := title.New(titleData["title"]).WithSubtitle(fmt.Sprintf(titleData["subtitle"].(string), utils.RankName(newRank))).WithFadeInDuration(fadeIn).WithFadeOutDuration(fadeOut).WithDuration(stay)
+	title := title.New(titleData["title"]).WithSubtitle(fmt.Sprintf(titleData["subtitle"].(string), config.RankName(newRank))).WithFadeInDuration(fadeIn).WithFadeOutDuration(fadeOut).WithDuration(stay)
 	targetPlayer.SendTitle(title)
 }

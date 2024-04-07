@@ -1,6 +1,6 @@
 package factions
 
-import "github.com/inceptionmc/factions/vault"
+import "github.com/STCraft/Factions/vault"
 
 // Faction Storage that contains all the faction's money, TNT, spawners, etc.
 type Storage struct {

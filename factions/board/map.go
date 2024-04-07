@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/memory"
+	"github.com/STCraft/Factions/utils"
 	"github.com/STCraft/dragonfly/server/world"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/utils"
 )
 
 const MAP_KEY_CHARS = "\\/#?ç¬£$%=&^ABCDEFGHJKLMNOPQRSTUVWXYZÄÖÜÆØÅ1234567890abcdeghjmnopqrsuvwxyÿzäöüæøåâêîûô"
@@ -40,7 +41,7 @@ func FactionMap(f *factions.FPlayer) string {
 		color = utils.Red
 	}
 
-	res = append(res, utils.Message("faction_map_header", color, fmt.Sprint(chunk.X(), ", ", chunk.Z()), area))
+	res = append(res, config.Message("faction_map_header", color, fmt.Sprint(chunk.X(), ", ", chunk.Z()), area))
 
 	for dz := int32(0); dz < MAP_HEIGHT; dz++ {
 		row := ""
@@ -109,7 +110,7 @@ func FactionMap(f *factions.FPlayer) string {
 	res = append(res, symbolMapping)
 
 	if overflown {
-		res = append(res, utils.Message("faction_map_overflown"))
+		res = append(res, config.Message("faction_map_overflown"))
 	}
 
 	return strings.Join(res, "\n")

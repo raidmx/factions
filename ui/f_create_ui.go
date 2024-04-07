@@ -4,11 +4,11 @@ import (
 	"unicode"
 
 	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/memory"
+	"github.com/STCraft/Factions/postgres"
 	"github.com/STCraft/dragonfly/server/player"
 	"github.com/STCraft/dragonfly/server/player/form"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/postgres"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FCreateUI struct {
@@ -16,7 +16,7 @@ type FCreateUI struct {
 }
 
 func NewFCreateUI() form.Form {
-	data := utils.GetUI("f_create_ui")
+	data := config.GetUI("f_create_ui")
 	input := data["input"].(map[string]any)
 
 	return form.New(
@@ -38,29 +38,29 @@ func (f FCreateUI) Submit(submitter form.Submitter) {
 
 	// check if faction with the name exists already
 	if memory.FactionExists(name) || postgres.FactionExists(name) {
-		p.Message(utils.Message("faction_name_exists", name))
+		p.Message(config.Message("faction_name_exists", name))
 		return
 	}
 
 	if len(name) < 3 {
-		p.Message(utils.Message("faction_name_too_small"))
+		p.Message(config.Message("faction_name_too_small"))
 		return
 	}
 
 	if len(name) > 15 {
-		p.Message(utils.Message("faction_name_too_long"))
+		p.Message(config.Message("faction_name_too_long"))
 		return
 	}
 
 	if !ValidFactionName(name) {
-		p.Message(utils.Message("faction_name_invalid"))
+		p.Message(config.Message("faction_name_invalid"))
 		return
 	}
 
 	memory.NewFaction(name, p)
 
-	p.Message(utils.Message("faction_created", name))
-	dragonfly.Server.Broadcast(utils.Message("broadcast_faction_created", p.Name(), name))
+	p.Message(config.Message("faction_created", name))
+	dragonfly.Server.Broadcast(config.Message("broadcast_faction_created", p.Name(), name))
 }
 
 // ValidFactionName returns whether the faction name is valid

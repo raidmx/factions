@@ -3,10 +3,10 @@ package commands
 import (
 	"fmt"
 
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/memory"
 	"github.com/STCraft/dragonfly/server/cmd"
 	"github.com/STCraft/dragonfly/server/player"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FAutoClaimCmd struct {
@@ -17,28 +17,28 @@ func (FAutoClaimCmd) Run(src cmd.Source, o *cmd.Output) {
 	p, ok := src.(*player.Player)
 
 	if !ok {
-		o.Print(utils.Message("command_usage_by_console"))
+		o.Print(config.Message("command_usage_by_console"))
 		return
 	}
 
 	fPlayer := memory.FPlayer(p)
 
 	if fPlayer.Faction == nil {
-		p.Message(utils.Message("must_be_in_a_faction"))
+		p.Message(config.Message("must_be_in_a_faction"))
 		return
 	}
 
 	fMember := fPlayer.GetFMember()
-	rank := utils.RankID(fMember.Rank)
+	rank := config.RankID(fMember.Rank)
 
 	// check if has permission
-	if !utils.RankHasPermission(rank, "autoclaim") {
-		mustBeRank := utils.RankWithNativePermission("autoclaim")
-		p.Message(utils.Message("must_be_" + mustBeRank))
+	if !config.RankHasPermission(rank, "autoclaim") {
+		mustBeRank := config.RankWithNativePermission("autoclaim")
+		p.Message(config.Message("must_be_" + mustBeRank))
 
 		return
 	}
 
 	fPlayer.AutoClaim = !fPlayer.AutoClaim
-	p.Message(fmt.Sprintf(utils.Message("autoclaim_changed"), fPlayer.AutoClaim))
+	p.Message(fmt.Sprintf(config.Message("autoclaim_changed"), fPlayer.AutoClaim))
 }

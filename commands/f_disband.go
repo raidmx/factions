@@ -1,11 +1,11 @@
 package commands
 
 import (
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/memory"
+	"github.com/STCraft/Factions/ui"
 	"github.com/STCraft/dragonfly/server/cmd"
 	"github.com/STCraft/dragonfly/server/player"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/ui"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FDisbandCmd struct {
@@ -16,17 +16,17 @@ func (FDisbandCmd) Run(src cmd.Source, o *cmd.Output) {
 	p, ok := src.(*player.Player)
 
 	if !ok {
-		o.Print(utils.Message("command_usage_by_console"))
+		o.Print(config.Message("command_usage_by_console"))
 		return
 	}
 
 	fPlayer := memory.FPlayer(p)
 
 	if !fPlayer.IsInAnyFaction() {
-		p.Message(utils.Message("must_be_in_a_faction"))
+		p.Message(config.Message("must_be_in_a_faction"))
 		return
 	} else if fPlayer.Faction.Leader.Xuid != p.XUID() {
-		p.Message(utils.Message("must_be_leader"))
+		p.Message(config.Message("must_be_leader"))
 		return
 	}
 

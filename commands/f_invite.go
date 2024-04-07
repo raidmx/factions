@@ -3,12 +3,12 @@ package commands
 import (
 	"fmt"
 
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/memory"
+	"github.com/STCraft/Factions/ui"
 	"github.com/STCraft/dragonfly/server/cmd"
 	"github.com/STCraft/dragonfly/server/player"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/ui"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FInviteCmd struct {
@@ -21,25 +21,25 @@ func (c FInviteCmd) Run(src cmd.Source, o *cmd.Output) {
 	p, ok := src.(*player.Player)
 
 	if !ok {
-		o.Print(utils.Message("command_usage_by_console"))
+		o.Print(config.Message("command_usage_by_console"))
 		return
 	}
 
 	fPlayer := memory.FPlayer(p)
 
 	if fPlayer.Faction == nil {
-		p.Message(utils.Message("must_be_in_a_faction"))
+		p.Message(config.Message("must_be_in_a_faction"))
 		return
 	} else if fPlayer.GetFMember().Rank < factions.Manager {
-		p.Message(utils.Message("must_be_manager"))
+		p.Message(config.Message("must_be_manager"))
 		return
 	}
 
 	faction := fPlayer.Faction
 
-	maxMembers := int(utils.GetFactionConfig[float64]("total_faction_members"))
+	maxMembers := int(config.GetFactionConfig[float64]("total_faction_members"))
 	if maxMembers == len(faction.Members) {
-		p.Message(utils.Message("max_members", fmt.Sprint(maxMembers)))
+		p.Message(config.Message("max_members", fmt.Sprint(maxMembers)))
 		return
 	}
 
@@ -51,20 +51,20 @@ func (c FInviteCmd) Run(src cmd.Source, o *cmd.Output) {
 	}
 
 	if len(targets) > 1 {
-		p.Message(utils.Message("more_than_one_target"))
+		p.Message(config.Message("more_than_one_target"))
 		return
 	}
 
 	target := targets[0].(*player.Player)
 
 	if target == p {
-		p.Message(utils.Message("command_usage_on_self"))
+		p.Message(config.Message("command_usage_on_self"))
 		return
 	}
 
 	// check if target is in same faction
 	if faction.IsMember(target) {
-		p.Message(utils.Message("already_a_member", target.Name()))
+		p.Message(config.Message("already_a_member", target.Name()))
 		return
 	}
 

@@ -2,11 +2,11 @@ package memory
 
 import (
 	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/factions/warp"
+	"github.com/STCraft/Factions/postgres"
 	"github.com/STCraft/dragonfly/server/player"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/factions/warp"
-	"github.com/inceptionmc/factions/postgres"
-	"github.com/inceptionmc/factions/utils"
 )
 
 var Factions = map[string]*factions.Faction{}
@@ -26,7 +26,7 @@ func NewFaction(faction string, Creator *player.Player) {
 
 	fac := &factions.Faction{
 		Name:        faction,
-		Description: utils.GetFactionConfig[string]("default_description"),
+		Description: config.GetFactionConfig[string]("default_description"),
 		Allies:      []string{},
 		Truces:      []string{},
 		Enemies:     []string{},

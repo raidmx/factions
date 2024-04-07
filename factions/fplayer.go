@@ -3,12 +3,11 @@ package factions
 import (
 	"math"
 
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/factions/chat"
 	"github.com/STCraft/dragonfly/server/block/cube"
 	"github.com/STCraft/dragonfly/server/player"
 	"github.com/STCraft/dragonfly/server/world"
-	"github.com/inceptionmc/factions/factions/chat"
-	"github.com/inceptionmc/factions/redis"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FPlayer struct {
@@ -52,16 +51,16 @@ func (f FPlayer) GetFMember() *FMember {
 
 // Invite invites the player to a Faction if not invited already
 func (f FPlayer) Invite(faction *Faction, invitedBy *player.Player) {
-	if redis.CheckInvite(f.Player.XUID(), faction.Name) {
-		invitedBy.Message(utils.Message("already_invited", f.Player.Name()))
+	if CheckInvite(f.Player.XUID(), faction.Name) {
+		invitedBy.Message(config.Message("already_invited", f.Player.Name()))
 		return
 	}
 
-	redis.Invite(f.Player.XUID(), faction.Name, invitedBy.Name())
+	Invite(f.Player.XUID(), faction.Name, invitedBy.Name())
 
-	f.Player.SendToast(utils.ToastTitle("faction_invitation"), utils.ToastContent("faction_invitation", faction.Name, faction.Name))
-	f.Player.Message(utils.Message("invitation_received"))
-	invitedBy.Message(utils.Message("invited_successfully", f.Player.Name()))
+	f.Player.SendToast(config.ToastTitle("faction_invitation"), config.ToastContent("faction_invitation", faction.Name, faction.Name))
+	f.Player.Message(config.Message("invitation_received"))
+	invitedBy.Message(config.Message("invited_successfully", f.Player.Name()))
 }
 
 // SwitchChannel switches the chat channel of a Faction Player

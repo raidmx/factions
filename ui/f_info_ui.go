@@ -3,10 +3,10 @@ package ui
 import (
 	"fmt"
 
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/factions"
 	"github.com/STCraft/dragonfly/server/player"
 	"github.com/STCraft/dragonfly/server/player/form"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/utils"
 )
 
 var temporary = map[string]*factions.Faction{}
@@ -17,7 +17,7 @@ type FInfoUI struct{}
 func NewFInfoUI(player *player.Player, faction *factions.Faction) form.Form {
 	temporary[player.XUID()] = faction
 
-	data := utils.GetUI("f_info_menu")
+	data := config.GetUI("f_info_menu")
 	bttns := data["buttons"].(map[string]any)
 
 	f := form.NewMenu(FInfoUI{}, data["title"])
@@ -56,7 +56,7 @@ type Info struct{}
 
 // newInfo ...
 func newInfo(faction *factions.Faction, panelType int) form.Form {
-	data := utils.GetUI("f_info_panel")
+	data := config.GetUI("f_info_panel")
 
 	f := form.NewMenu(Info{}, fmt.Sprintf(data["title"].(string), faction.Name))
 

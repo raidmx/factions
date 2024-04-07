@@ -4,11 +4,11 @@ import (
 	"sync"
 	"time"
 
+	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/postgres"
+	"github.com/STCraft/Factions/utils"
 	"github.com/STCraft/dragonfly/server/world"
 	"github.com/go-gl/mathgl/mgl64"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/postgres"
-	"github.com/inceptionmc/factions/utils"
 )
 
 var Claims = sync.Map{}
@@ -52,7 +52,7 @@ func RegisterClaim(faction *factions.Faction, chunk *world.ChunkPos) {
 // DeleteClaim deletes a claim at a chunk
 func DeleteClaim(chunk *world.ChunkPos) {
 	Claims.Delete(*chunk)
-	postgres.DeleteClaim(commons.Encode(chunk))
+	postgres.DeleteClaim(utils.Encode(chunk))
 }
 
 // FactionAt returns the faction that owns the chunk which contains a position

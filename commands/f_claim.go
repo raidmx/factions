@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/memory"
 	"github.com/STCraft/dragonfly/server/cmd"
 	"github.com/STCraft/dragonfly/server/player"
 	"github.com/STCraft/dragonfly/server/world"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FClaimCmd struct {
@@ -22,25 +22,25 @@ func (c FClaimCmd) Run(src cmd.Source, o *cmd.Output) {
 	p, ok := src.(*player.Player)
 
 	if !ok {
-		o.Print(utils.Message("command_usage_by_console"))
+		o.Print(config.Message("command_usage_by_console"))
 		return
 	}
 
 	fPlayer := memory.FPlayer(p)
 
 	if fPlayer.Faction == nil {
-		p.Message(utils.Message("must_be_in_a_faction"))
+		p.Message(config.Message("must_be_in_a_faction"))
 		return
 	}
 
 	faction := fPlayer.Faction
 	fMember := fPlayer.GetFMember()
-	rank := utils.RankID(fMember.Rank)
+	rank := config.RankID(fMember.Rank)
 
 	// check if has permission
-	if !utils.RankHasPermission(rank, "claim") {
-		mustBeRank := utils.RankWithNativePermission("claim")
-		p.Message(utils.Message("must_be_" + mustBeRank))
+	if !config.RankHasPermission(rank, "claim") {
+		mustBeRank := config.RankWithNativePermission("claim")
+		p.Message(config.Message("must_be_" + mustBeRank))
 
 		return
 	}
@@ -53,10 +53,10 @@ func (c FClaimCmd) Run(src cmd.Source, o *cmd.Output) {
 		radius = 1
 	}
 
-	radiusLimit := int(utils.GetFactionConfig[float64]("radius_claim_limit"))
+	radiusLimit := int(config.GetFactionConfig[float64]("radius_claim_limit"))
 
 	if radius <= 0 || radius > radiusLimit {
-		p.Message(utils.Message("invalid_claim_radius", fmt.Sprint(radiusLimit)))
+		p.Message(config.Message("invalid_claim_radius", fmt.Sprint(radiusLimit)))
 		return
 	}
 
@@ -66,11 +66,11 @@ func (c FClaimCmd) Run(src cmd.Source, o *cmd.Output) {
 		if !claimed {
 			owner := memory.ChunkOwner(chunkPos)
 
-			p.Message(utils.Message("chunk_already_claimed", owner.Name))
+			p.Message(config.Message("chunk_already_claimed", owner.Name))
 			return
 		}
 
-		p.Message(utils.Message("chunk_claimed", chunkPos.X(), chunkPos.Z()))
+		p.Message(config.Message("chunk_claimed", chunkPos.X(), chunkPos.Z()))
 		return
 	}
 
@@ -157,11 +157,11 @@ func (c FClaimCmd) Run(src cmd.Source, o *cmd.Output) {
 	}
 
 	if claimedLands == 0 {
-		p.Message(utils.Message("radius_claim_failed", fmt.Sprint(radius, " x ", radius)))
+		p.Message(config.Message("radius_claim_failed", fmt.Sprint(radius, " x ", radius)))
 		return
 	}
 
-	p.Message(utils.Message("radius_claim_successful", fmt.Sprint(claimedLands), fmt.Sprint(radius, " x ", radius)))
+	p.Message(config.Message("radius_claim_successful", fmt.Sprint(claimedLands), fmt.Sprint(radius, " x ", radius)))
 }
 
 // tryClaim tries to claim the land, returns whether successful or not

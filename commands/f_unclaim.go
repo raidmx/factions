@@ -1,10 +1,10 @@
 package commands
 
 import (
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/memory"
 	"github.com/STCraft/dragonfly/server/cmd"
 	"github.com/STCraft/dragonfly/server/player"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FUnclaimCmd struct {
@@ -15,25 +15,25 @@ func (FUnclaimCmd) Run(src cmd.Source, o *cmd.Output) {
 	p, ok := src.(*player.Player)
 
 	if !ok {
-		o.Print(utils.Message("command_usage_by_console"))
+		o.Print(config.Message("command_usage_by_console"))
 		return
 	}
 
 	fPlayer := memory.FPlayer(p)
 
 	if fPlayer.Faction == nil {
-		p.Message(utils.Message("must_be_in_a_faction"))
+		p.Message(config.Message("must_be_in_a_faction"))
 		return
 	}
 
 	faction := fPlayer.Faction
 	fMember := fPlayer.GetFMember()
-	rank := utils.RankID(fMember.Rank)
+	rank := config.RankID(fMember.Rank)
 
 	// check if has permission
-	if !utils.RankHasPermission(rank, "claim") {
-		mustBeRank := utils.RankWithNativePermission("claim")
-		p.Message(utils.Message("must_be_" + mustBeRank))
+	if !config.RankHasPermission(rank, "claim") {
+		mustBeRank := config.RankWithNativePermission("claim")
+		p.Message(config.Message("must_be_" + mustBeRank))
 
 		return
 	}
@@ -43,13 +43,13 @@ func (FUnclaimCmd) Run(src cmd.Source, o *cmd.Output) {
 
 	// check if land is already free
 	if owner == nil {
-		p.Message(utils.Message("chunk_is_wilderness"))
+		p.Message(config.Message("chunk_is_wilderness"))
 		return
 	}
 
 	// check if land is owned by another faction
 	if owner != nil && owner.Name != faction.Name {
-		p.Message(utils.Message("cannot_unclaim_chunk", owner.Name))
+		p.Message(config.Message("cannot_unclaim_chunk", owner.Name))
 		return
 	}
 
@@ -71,5 +71,5 @@ func (FUnclaimCmd) Run(src cmd.Source, o *cmd.Output) {
 
 	// unclaim
 	memory.DeleteClaim(chunkPos)
-	p.Message(utils.Message("chunk_unclaimed", chunkPos.X(), chunkPos.Z()))
+	p.Message(config.Message("chunk_unclaimed", chunkPos.X(), chunkPos.Z()))
 }

@@ -1,10 +1,15 @@
-package utils
+package config
 
 import (
-	"github.com/inceptionmc/factions/factions/chat"
+	_ "embed"
+
+	"github.com/STCraft/DFLoader/config"
+	"github.com/STCraft/Factions/factions/chat"
 )
 
-var factionConfig = GetConfig("faction.json")
+//go:embed faction.json
+var defaultFactionConfig []byte
+var factionConfig = config.New("./configs/faction.json", defaultFactionConfig)
 
 var rankIDs = map[int]string{
 	0: "recruit",

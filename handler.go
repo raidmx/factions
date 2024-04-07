@@ -5,6 +5,12 @@ import (
 	"time"
 
 	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/factions/board"
+	"github.com/STCraft/Factions/factions/chat"
+	"github.com/STCraft/Factions/factions/teleport"
+	"github.com/STCraft/Factions/memory"
 	"github.com/STCraft/dragonfly/server/block/cube"
 	"github.com/STCraft/dragonfly/server/event"
 	"github.com/STCraft/dragonfly/server/item"
@@ -12,26 +18,22 @@ import (
 	"github.com/STCraft/dragonfly/server/player/title"
 	"github.com/STCraft/dragonfly/server/world"
 	"github.com/go-gl/mathgl/mgl64"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/factions/board"
-	"github.com/inceptionmc/factions/factions/chat"
-	"github.com/inceptionmc/factions/factions/teleport"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/utils"
 )
 
-type PlayerHandler struct {
+// FactionHandler handles all the different events for players in context of Factions.
+type FactionHandler struct {
 	player.NopHandler
 	p *player.Player
 }
 
-// Handler ...
-func Handler(p *player.Player) *PlayerHandler {
-	return &PlayerHandler{p: p}
+// HandleJoin ...
+func (h *FactionHandler) HandleJoin(ctx *event.Context, p *player.Player) {
+	h.p = p
+	memory.LoadFPlayer(p)
 }
 
 // HandleQuit ...
-func (h *PlayerHandler) HandleQuit() {
+func (h *FactionHandler) HandleQuit() {
 	fPlayer := memory.FPlayer(h.p)
 	faction := fPlayer.Faction
 
@@ -48,7 +50,7 @@ func (h *PlayerHandler) HandleQuit() {
 }
 
 // HandleMove ...
-func (h *PlayerHandler) HandleMove(ctx *event.Context, newPos mgl64.Vec3, newYaw, newPitch float64) {
+func (h *FactionHandler) HandleMove(ctx *event.Context, newPos mgl64.Vec3, newYaw, newPitch float64) {
 	// check if player was teleporting
 	if teleport.IsTeleporting(h.p) {
 		data := teleport.GetTeleportationData(h.p)
@@ -72,7 +74,7 @@ func (h *PlayerHandler) HandleMove(ctx *event.Context, newPos mgl64.Vec3, newYaw
 		// auto claim system
 		if owner == nil && fPlayer.AutoClaim {
 			memory.RegisterClaim(fPlayer.Faction, chunk)
-			p.Message(fmt.Sprintf(utils.Message("chunk_claimed"), chunk.X(), chunk.Z()))
+			p.Message(fmt.Sprintf(config.Message("chunk_claimed"), chunk.X(), chunk.Z()))
 		}
 
 		// faction map auto update system
@@ -105,7 +107,7 @@ func (h *PlayerHandler) HandleMove(ctx *event.Context, newPos mgl64.Vec3, newYaw
 }
 
 // HandleBlockBreak ...
-func (h *PlayerHandler) HandleBlockBreak(ctx *event.Context, pos cube.Pos, drops *[]item.Stack, xp *int) {
+func (h *FactionHandler) HandleBlockBreak(ctx *event.Context, pos cube.Pos, drops *[]item.Stack, xp *int) {
 	p := h.p
 	w := p.World()
 
@@ -116,7 +118,7 @@ func (h *PlayerHandler) HandleBlockBreak(ctx *event.Context, pos cube.Pos, drops
 
 	if owner != nil && (fPlayer.Faction == nil || fPlayer.Faction.Name != owner.Name) {
 		if time.Now().Unix() > fPlayer.ErrorCooldown {
-			p.Message(utils.Message("cannot_modify_build", owner.Name))
+			p.Message(config.Message("cannot_modify_build", owner.Name))
 			fPlayer.ErrorCooldown = time.Now().Unix() + 2
 		}
 		ctx.Cancel()
@@ -124,7 +126,7 @@ func (h *PlayerHandler) HandleBlockBreak(ctx *event.Context, pos cube.Pos, drops
 }
 
 // HandleBlockPlace ...
-func (h *PlayerHandler) HandleBlockPlace(ctx *event.Context, pos cube.Pos, b world.Block) {
+func (h *FactionHandler) HandleBlockPlace(ctx *event.Context, pos cube.Pos, b world.Block) {
 	p := h.p
 	w := p.World()
 
@@ -135,7 +137,7 @@ func (h *PlayerHandler) HandleBlockPlace(ctx *event.Context, pos cube.Pos, b wor
 
 	if owner != nil && (fPlayer.Faction == nil || fPlayer.Faction.Name != owner.Name) {
 		if time.Now().Unix() > fPlayer.ErrorCooldown {
-			p.Message(utils.Message("cannot_modify_build", owner.Name))
+			p.Message(config.Message("cannot_modify_build", owner.Name))
 			fPlayer.ErrorCooldown = time.Now().Unix() + 2
 		}
 		ctx.Cancel()
@@ -143,7 +145,7 @@ func (h *PlayerHandler) HandleBlockPlace(ctx *event.Context, pos cube.Pos, b wor
 }
 
 // HandleAttackEntity ...
-func (h *PlayerHandler) HandleAttackEntity(ctx *event.Context, e world.Entity, force, height *float64, critical *bool) {
+func (h *FactionHandler) HandleAttackEntity(ctx *event.Context, e world.Entity, force, height *float64, critical *bool) {
 	p := h.p
 	t, ok := e.(*player.Player)
 
@@ -169,15 +171,15 @@ func (h *PlayerHandler) HandleAttackEntity(ctx *event.Context, e world.Entity, f
 		}
 
 		if faction.Alliance(tFaction) {
-			p.Message(utils.Message("cannot_hit_allies", t.Name()))
+			p.Message(config.Message("cannot_hit_allies", t.Name()))
 		}
 
 		if faction.Truce(tFaction) {
-			p.Message(utils.Message("cannot_hit_truces", t.Name()))
+			p.Message(config.Message("cannot_hit_truces", t.Name()))
 		}
 
 		if faction.Neutral(tFaction) {
-			p.Message(utils.Message("cannot_hit_neutrals", t.Name()))
+			p.Message(config.Message("cannot_hit_neutrals", t.Name()))
 		}
 	}
 
@@ -185,12 +187,12 @@ func (h *PlayerHandler) HandleAttackEntity(ctx *event.Context, e world.Entity, f
 }
 
 // HandleChat ...
-func (h *PlayerHandler) HandleChat(ctx *event.Context, message *string) {
+func (h *FactionHandler) HandleChat(ctx *event.Context, message *string) {
 	player := h.p
 	fPlayer := memory.FPlayer(player)
 
 	channel := fPlayer.Channel
-	format := utils.GetFactionConfig[map[string]any]("channels")[chat.ChannelID(channel)].(string)
+	format := config.GetFactionConfig[map[string]any]("channels")[chat.ChannelID(channel)].(string)
 
 	switch fPlayer.Channel.ChannelType() {
 	case chat.Global:

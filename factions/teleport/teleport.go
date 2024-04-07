@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/STCraft/Factions/config"
 	"github.com/STCraft/dragonfly/server/player"
 	"github.com/STCraft/dragonfly/server/player/title"
 	"github.com/STCraft/dragonfly/server/world/particle"
 	"github.com/go-gl/mathgl/mgl64"
-	"github.com/inceptionmc/factions/utils"
 )
 
 // TeleportationData contains the player undergoing teleportation's starting position, rotation
@@ -34,13 +34,13 @@ func Teleport(player *player.Player, loc mgl64.Vec3, yaw float64, pitch float64)
 		TargetPitch: pitch,
 	}
 
-	player.Message(utils.Message("teleportation_started"))
-	duration := int(utils.GetFactionConfig[float64]("teleport_duration"))
+	player.Message(config.Message("teleportation_started"))
+	duration := int(config.GetFactionConfig[float64]("teleport_duration"))
 
 	go func() {
 		for duration > -1 {
 			if duration == 0 {
-				data := utils.TitleData("teleported")
+				data := config.TitleData("teleported")
 				t := data["title"].(string)
 
 				// delete teleportation data
@@ -56,16 +56,16 @@ func Teleport(player *player.Player, loc mgl64.Vec3, yaw float64, pitch float64)
 			} else {
 				// check if teleportation was cancelled due to change in movement
 				if !IsTeleporting(player) {
-					data := utils.TitleData("teleportation_cancelled")
+					data := config.TitleData("teleportation_cancelled")
 					t := data["title"].(string)
 
 					// teleportation failure
-					player.Message(utils.Message("teleportation_cancelled"))
+					player.Message(config.Message("teleportation_cancelled"))
 					sendTitle(player, t, data)
 
 					return
 				} else {
-					data := utils.TitleData("teleporting")
+					data := config.TitleData("teleporting")
 					t := fmt.Sprintf(data["title"].(string), duration)
 
 					sendTitle(player, t, data)

@@ -5,14 +5,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/STCraft/DFLoader/db"
 	"github.com/STCraft/DFLoader/dragonfly"
+	"github.com/STCraft/Factions/config"
+	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/memory"
 	"github.com/STCraft/dragonfly/server/cmd"
 	"github.com/STCraft/dragonfly/server/player"
 	"github.com/STCraft/dragonfly/server/player/title"
-	"github.com/inceptionmc/factions/factions"
-	"github.com/inceptionmc/factions/memory"
-	"github.com/inceptionmc/factions/utils"
 )
 
 type FDemoteCmd struct {
@@ -26,7 +25,7 @@ func (c FDemoteCmd) Run(src cmd.Source, o *cmd.Output) {
 
 	// check if console
 	if !ok {
-		o.Print(utils.Message("command_usage_by_console"))
+		o.Print(config.Message("command_usage_by_console"))
 		return
 	}
 
@@ -34,76 +33,76 @@ func (c FDemoteCmd) Run(src cmd.Source, o *cmd.Output) {
 
 	// check if faction exists
 	if fPlayer.Faction == nil {
-		p.Message(utils.Message("must_be_in_a_faction"))
+		p.Message(config.Message("must_be_in_a_faction"))
 		return
 	}
 
 	faction := fPlayer.Faction
 	fMember := fPlayer.GetFMember()
-	rank := utils.RankID(fMember.Rank)
+	rank := config.RankID(fMember.Rank)
 
 	// check if has permission
-	if !utils.RankHasPermission(rank, "demote") {
-		mustBeRank := utils.RankWithNativePermission("demote")
-		p.Message(utils.Message("must_be_" + mustBeRank))
+	if !config.RankHasPermission(rank, "demote") {
+		mustBeRank := config.RankWithNativePermission("demote")
+		p.Message(config.Message("must_be_" + mustBeRank))
 
 		return
 	}
 
 	// check target
-	user := db.GetUserFromName(c.Member)
+	user := dragonfly.UserFromName(c.Member)
 
 	if !ok {
-		p.Message(utils.Message("invalid_player"))
+		p.Message(config.Message("invalid_player"))
 		return
 	}
 
 	if strings.EqualFold(user.Name, p.Name()) {
-		p.Message(utils.Message("command_usage_on_self"))
+		p.Message(config.Message("command_usage_on_self"))
 		return
 	}
 
 	targetFMember := faction.TryGetMember(c.Member)
 
 	if targetFMember == nil {
-		p.Message(utils.Message("player_not_in_faction", user.Name))
+		p.Message(config.Message("player_not_in_faction", user.Name))
 		return
 	}
 
 	// check if higher in hierarchy
 	if !fMember.Compare(targetFMember) {
-		p.Message(utils.Message("must_be_higher_in_hierarchy", user.Name))
+		p.Message(config.Message("must_be_higher_in_hierarchy", user.Name))
 		return
 	}
 
 	// check if target is already recruit
 	if targetFMember.Rank == factions.Recruit {
-		p.Message(utils.Message("cannot_demote_recruit"))
+		p.Message(config.Message("cannot_demote_recruit"))
 		return
 	}
 
 	// demote
 	newRank := targetFMember.Predecessor()
 
-	officersMax := int(utils.GetFactionConfig[float64]("number_of_officers"))
-	managersMax := int(utils.GetFactionConfig[float64]("number_of_managers"))
+	officersMax := int(config.GetFactionConfig[float64]("number_of_officers"))
+	managersMax := int(config.GetFactionConfig[float64]("number_of_managers"))
 
 	switch newRank {
 	case factions.Officer:
 		if len(faction.MembersWithRank(newRank))+1 == officersMax {
-			p.Message(utils.Message("max_officers", fmt.Sprint(officersMax)))
+			p.Message(config.Message("max_officers", fmt.Sprint(officersMax)))
 			return
 		}
 	case factions.Manager:
 		if len(faction.MembersWithRank(newRank))+1 == managersMax {
-			p.Message(utils.Message("max_managers", fmt.Sprint(managersMax)))
+			p.Message(config.Message("max_managers", fmt.Sprint(managersMax)))
 			return
 		}
 	}
 
 	// demote
 	fMember.Rank = newRank
-	faction.Broadcast(utils.Message("faction_member_demoted", targetFMember.Name, utils.RankName(newRank)))
+	faction.Broadcast(config.Message("faction_member_demoted", targetFMember.Name, config.RankName(newRank)))
 
 	// send title
 	targetPlayer, ok := dragonfly.Server.PlayerByName(user.Name)
@@ -112,11 +111,11 @@ func (c FDemoteCmd) Run(src cmd.Source, o *cmd.Output) {
 		return
 	}
 
-	titleData := utils.TitleData("demoted")
+	titleData := config.TitleData("demoted")
 	fadeIn := time.Duration(titleData["fadeIn"].(float64)) * time.Second
 	fadeOut := time.Duration(titleData["fadeOut"].(float64)) * time.Second
 	stay := time.Duration(titleData["stay"].(float64)) * time.Second
 
-	title := title.New(titleData["title"]).WithSubtitle(fmt.Sprintf(titleData["subtitle"].(string), utils.RankName(newRank))).WithFadeInDuration(fadeIn).WithFadeOutDuration(fadeOut).WithDuration(stay)
+	title := title.New(titleData["title"]).WithSubtitle(fmt.Sprintf(titleData["subtitle"].(string), config.RankName(newRank))).WithFadeInDuration(fadeIn).WithFadeOutDuration(fadeOut).WithDuration(stay)
 	targetPlayer.SendTitle(title)
 }
