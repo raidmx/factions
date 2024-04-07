@@ -9,7 +9,7 @@ import (
 
 //go:embed faction.json
 var defaultFactionConfig []byte
-var factionConfig = config.New("./configs/faction.json", defaultFactionConfig)
+var factionConfig = config.New("configs", "faction.json", defaultFactionConfig)
 
 var rankIDs = map[int]string{
 	0: "recruit",

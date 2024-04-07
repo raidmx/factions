@@ -58,7 +58,7 @@ func (c FManagerCmd) Run(src cmd.Source, o *cmd.Output) {
 	// check target
 	user := dragonfly.UserFromName(c.Member)
 
-	if !ok {
+	if user == nil {
 		p.Message(config.Message("invalid_player"))
 		return
 	}

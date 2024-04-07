@@ -1,5 +1,5 @@
-github.com/STCraft/dragonfly v0.0.0-20240407091208-0d9e52d7f3f3 h1:Xao6eeoeUWIwRca36qfjY9vdNEwmGzuJkXt9PArqRSk=
-github.com/STCraft/dragonfly v0.0.0-20240407091208-0d9e52d7f3f3/go.mod h1:gKwvqzKbqjHX23VnU+ImffT4iMB7XQOaFmTfy0D4yd4=
+github.com/STCraft/dragonfly v0.0.0-20240407102235-67c00ced3c12 h1:1j3J+bk0VaCsypzqIMfkcQR/RJVIsnpDK2VOFk7cPxI=
+github.com/STCraft/dragonfly v0.0.0-20240407102235-67c00ced3c12/go.mod h1:gKwvqzKbqjHX23VnU+ImffT4iMB7XQOaFmTfy0D4yd4=
 github.com/brentp/intintmap v0.0.0-20190211203843-30dc0ade9af9 h1:/G0ghZwrhou0Wq21qc1vXXMm/t/aKWkALWwITptKbE0=
 github.com/brentp/intintmap v0.0.0-20190211203843-30dc0ade9af9/go.mod h1:TOk10ahXejq9wkEaym3KPRNeuR/h5Jx+s8QRWIa2oTM=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=

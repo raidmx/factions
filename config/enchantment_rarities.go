@@ -8,7 +8,7 @@ import (
 
 //go:embed enchantment_rarities.json
 var defaultEnchantmentRarities []byte
-var enchantmentRarities = config.New("./configs/enchantment_rarities.json", defaultEnchantmentRarities)
+var enchantmentRarities = config.New("configs", "enchantment_rarities.json", defaultEnchantmentRarities)
 
 // EnchantmentRarityName returns the enchantment rarity name
 func EnchantmentRarityName(key string) string {

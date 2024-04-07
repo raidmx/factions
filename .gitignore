@@ -1,5 +1,7 @@
 world/*
-configs/config.toml
+configs/*
 players/*
 resources/*
-configs/economy/*
+configs/*
+/*json
+/*toml

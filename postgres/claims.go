@@ -5,6 +5,7 @@ import (
 
 	"github.com/STCraft/DFLoader/dragonfly"
 	"github.com/STCraft/Factions/factions"
+	"github.com/STCraft/Factions/utils"
 	"github.com/STCraft/dragonfly/server/world"
 )
 
@@ -35,7 +36,7 @@ func GetAllClaims() map[world.ChunkPos]*factions.Claim {
 
 // RegisterClaim registers a new claim
 func RegisterClaim(position *world.ChunkPos, owner string, created int64) {
-	dragonfly.DBExec(`INSERT INTO "CLAIMS" ("POSITION", "OWNER", "CREATED") VALUES($1, $2, $3)`, position, owner, created)
+	dragonfly.DBExec(`INSERT INTO "CLAIMS" ("POSITION", "OWNER", "CREATED") VALUES($1, $2, $3)`, utils.Encode(position), owner, created)
 }
 
 // DeleteClaim deletes the claim at a location

@@ -54,7 +54,7 @@ func Faction(faction string) *factions.Faction {
 
 // SaveFaction saves the faction data into the Database
 func SaveFaction(faction *factions.Faction) {
-	dragonfly.DBExec(`INSERT INTO "FACTIONS" ("NAME", "DESCRIPTION", "ALLIES", "TRUCES", "ENEMIES", "LEADER", "MEMBERS", "HOME", "WARPS", "STORAGE") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)`, faction.Name, faction.Description, utils.Encode(faction.Allies), utils.Encode(faction.Truces), utils.Encode(faction.Enemies), utils.Encode(faction.Leader), utils.Encode(faction.Members), utils.Encode(faction.Home), utils.Encode(faction.Warps), utils.Encode(faction.Storage))
+	dragonfly.DBExec(`INSERT INTO "FACTIONS" ("NAME", "DESCRIPTION", "ALLIES", "TRUCES", "ENEMIES", "LEADER", "MEMBERS", "HOME", "WARPS", "STORAGE") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`, faction.Name, faction.Description, utils.Encode(faction.Allies), utils.Encode(faction.Truces), utils.Encode(faction.Enemies), utils.Encode(faction.Leader), utils.Encode(faction.Members), utils.Encode(faction.Home), utils.Encode(faction.Warps), utils.Encode(faction.Storage))
 }
 
 // UpdateFaction saves the faction data into the Database

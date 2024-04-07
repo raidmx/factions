@@ -11,6 +11,12 @@ import (
 )
 
 func main() {
+	defer func() {
+		memory.SaveAllFPlayers()
+		memory.SaveAllFactions()
+		loader.Deinit()
+	}()
+
 	loader.Init() // Intiialise the dragonfly server
 
 	postgres.Init()                                                 // Initialise our tables in the PostgreSQL database
@@ -18,7 +24,7 @@ func main() {
 	dragonfly.Server.RegisterHandler("factions", &FactionHandler{}) // Register Faction Handler
 
 	c := memory.LoadClaims()
-	server.Console.SendMessagef("[Factions] Loaded %d claims!", c)
+	server.Console.SendMessage("[Factions] Loaded %d claims!", c)
 
 	loader.Start() // Start the dragonfly server
 }

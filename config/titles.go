@@ -8,7 +8,7 @@ import (
 
 //go:embed titles.json
 var defaultTitles []byte
-var titles = config.New("./configs/titles.json", defaultTitles)
+var titles = config.New("configs", "titles.json", defaultTitles)
 
 // TitleData returns the title data
 func TitleData(key string) map[string]any {

@@ -8,7 +8,7 @@ import (
 
 //go:embed enchantments.json
 var defaultEnchantments []byte
-var enchantments = config.New("./configs/enchantments.json", defaultEnchantments)
+var enchantments = config.New("configs", "enchantments.json", defaultEnchantments)
 
 // EnchantmentName returns the enchantment name
 func EnchantmentName(key string) string {

@@ -9,7 +9,7 @@ import (
 
 //go:embed toasts.json
 var defaultToasts []byte
-var toasts = config.New("./configs/toasts.json", defaultToasts)
+var toasts = config.New("configs", "toasts.json", defaultToasts)
 
 // GetToast parses and returns a toast from a config file.
 func GetToast(key string) (title string, content string) {

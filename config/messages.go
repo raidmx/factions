@@ -8,7 +8,7 @@ import (
 
 //go:embed messages.json
 var defaultMessages []byte
-var messages = config.New("./configs/messages.json", defaultMessages)
+var messages = config.New("configs", "messages.json", defaultMessages)
 
 // Message returns the formatted message
 func Message(message string, args ...any) string {
