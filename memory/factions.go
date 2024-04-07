@@ -75,13 +75,13 @@ func DeleteFaction(faction string) {
 }
 
 // SaveFaction saves the Faction data from the memory into the database
-func SaveFaction(faction string) {
-	postgres.UpdateFaction(Faction(faction))
+func SaveFaction(faction *factions.Faction) {
+	postgres.UpdateFaction(faction)
 }
 
 // SaveAllFactions saves all the Faction data from the memory into the database
 func SaveAllFactions() {
-	for f := range Factions {
+	for _, f := range Factions {
 		SaveFaction(f)
 	}
 }

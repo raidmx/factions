@@ -14,13 +14,14 @@ import (
 // Faction returns the Faction Data from the database
 func Faction(faction string) *factions.Faction {
 	rows := dragonfly.DBQuery(`SELECT * FROM "FACTIONS" WHERE "NAME" = $1`, faction)
+	defer rows.Close()
 
 	if rows.Next() {
 		var name, desc, a, t, e, l, m, h, w, s string
-		rows.Scan(&name, &desc, &a, &t, &e, &l, &m, &h, &w)
+		rows.Scan(&name, &desc, &a, &t, &e, &l, &m, &h, &w, &s)
 
 		var allies, truces, enemies []string
-		var leader *factions.FMember
+		var leader factions.FMember
 		var members []*factions.FMember
 		var home *home.Home
 		var warps map[string]*warp.Warp
@@ -41,7 +42,7 @@ func Faction(faction string) *factions.Faction {
 			Allies:      allies,
 			Truces:      truces,
 			Enemies:     enemies,
-			Leader:      leader,
+			Leader:      &leader,
 			Members:     members,
 			Home:        home,
 			Warps:       warps,
@@ -59,7 +60,7 @@ func SaveFaction(faction *factions.Faction) {
 
 // UpdateFaction saves the faction data into the Database
 func UpdateFaction(faction *factions.Faction) {
-	dragonfly.DBExec(`UPDATE "FACTIONS" SET "DESCRIPTION" = $1, "ALLIES" = $2, "TRUCES" = $3, "ENEMIES" = $4, "LEADER" = $5, "MEMBERS" = $6, "HOME" = $7, "WARPS" = $8 WHERE NAME = $9`, faction.Description, utils.Encode(faction.Allies), utils.Encode(faction.Truces), utils.Encode(faction.Enemies), utils.Encode(faction.Leader), utils.Encode(faction.Members), utils.Encode(faction.Home), utils.Encode(faction.Warps), faction.Name)
+	dragonfly.DBExec(`UPDATE "FACTIONS" SET "DESCRIPTION" = $1, "ALLIES" = $2, "TRUCES" = $3, "ENEMIES" = $4, "LEADER" = $5, "MEMBERS" = $6, "HOME" = $7, "WARPS" = $8 WHERE "NAME" = $9`, faction.Description, utils.Encode(faction.Allies), utils.Encode(faction.Truces), utils.Encode(faction.Enemies), utils.Encode(faction.Leader), utils.Encode(faction.Members), utils.Encode(faction.Home), utils.Encode(faction.Warps), faction.Name)
 }
 
 // DeleteFaction clears the faction data from the database
@@ -70,5 +71,6 @@ func DeleteFaction(faction string) {
 // FactionExists returns whether a Faction with a name exists
 func FactionExists(faction string) bool {
 	rows := dragonfly.DBQuery(`SELECT "NAME" FROM "FACTIONS" WHERE LOWER("NAME") = $1`, strings.ToLower(faction))
+	defer rows.Close()
 	return rows.Next()
 }

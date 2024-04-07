@@ -48,7 +48,7 @@ func (FUnclaimCmd) Run(src cmd.Source, o *cmd.Output) {
 	}
 
 	// check if land is owned by another faction
-	if owner != nil && owner.Name != faction.Name {
+	if owner.Name != faction.Name {
 		p.Message(config.Message("cannot_unclaim_chunk", owner.Name))
 		return
 	}

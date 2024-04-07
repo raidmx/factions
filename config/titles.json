@@ -1,6 +1,6 @@
 {
     "teleporting": {
-        "title": "§cTeleporting ... §8[§e%d secs§8]",
+        "title": "§cTeleporting §8in §e%d secs",
         "subtitle": "§cDo not move!",
         "actionbar": "",
         "fadeIn": 0,

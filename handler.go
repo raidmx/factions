@@ -38,7 +38,7 @@ func (h *FactionHandler) HandleQuit() {
 	faction := fPlayer.Faction
 
 	if faction != nil && faction.OnlineCount() <= 1 {
-		memory.SaveFaction(faction.Name)
+		memory.SaveFaction(faction)
 	}
 
 	memory.SaveFPlayer(h.p.XUID())
@@ -74,7 +74,7 @@ func (h *FactionHandler) HandleMove(ctx *event.Context, newPos mgl64.Vec3, newYa
 		// auto claim system
 		if owner == nil && fPlayer.AutoClaim {
 			memory.RegisterClaim(fPlayer.Faction, chunk)
-			p.Message(fmt.Sprintf(config.Message("chunk_claimed"), chunk.X(), chunk.Z()))
+			p.Message(config.Message("chunk_claimed", chunk.X(), chunk.Z()))
 		}
 
 		// faction map auto update system

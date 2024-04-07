@@ -1,8 +1,6 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/STCraft/Factions/config"
 	"github.com/STCraft/Factions/memory"
 	"github.com/STCraft/dragonfly/server/cmd"
@@ -40,5 +38,5 @@ func (FAutoClaimCmd) Run(src cmd.Source, o *cmd.Output) {
 	}
 
 	fPlayer.AutoClaim = !fPlayer.AutoClaim
-	p.Message(fmt.Sprintf(config.Message("autoclaim_changed"), fPlayer.AutoClaim))
+	p.Message(config.Message("autoclaim_changed", fPlayer.AutoClaim))
 }

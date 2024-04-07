@@ -54,7 +54,12 @@ func (c FUnclaimAllCmd) Run(src cmd.Source, o *cmd.Output) {
 	}
 
 	// unclaim all the claims
-	for _, c := range memory.GetClaims(faction.Name) {
+	claims := memory.GetClaims(faction.Name)
+	count := len(claims)
+
+	for _, c := range claims {
 		memory.DeleteClaim(c.Position)
 	}
+
+	p.Message(config.Message("all_chunks_unclaimed", count))
 }

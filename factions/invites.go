@@ -21,6 +21,7 @@ func Invite(xuid string, faction string, invitedBy string) {
 func AllInvites(xuid string) map[string]string {
 	invites := map[string]string{}
 	rows := dragonfly.DBQuery(`SELECT "FACTION", "INVITED_BY" FROM "FINVITES" WHERE "XUID" = $1`, xuid)
+	defer rows.Close()
 
 	for rows.Next() {
 		var faction, invitedBy string
@@ -35,6 +36,7 @@ func AllInvites(xuid string) map[string]string {
 // InviteExpiry returns the expiry of a faction invite
 func InviteExpiry(xuid string, faction string) time.Duration {
 	rows := dragonfly.DBQuery(`SELECT "EXPIRY" FROM "FINVITES" WHERE "XUID" = $1 AND "FACTION" = $2`, xuid, faction)
+	defer rows.Close()
 
 	if !rows.Next() {
 		return time.Second * 0

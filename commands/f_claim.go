@@ -61,7 +61,7 @@ func (c FClaimCmd) Run(src cmd.Source, o *cmd.Output) {
 	}
 
 	if radius == 1 {
-		claimed := tryClaim(p, faction, chunkPos)
+		claimed := tryClaim(faction, chunkPos)
 
 		if !claimed {
 			owner := memory.ChunkOwner(chunkPos)
@@ -95,7 +95,7 @@ func (c FClaimCmd) Run(src cmd.Source, o *cmd.Output) {
 			go func(xc int32, zc int32) {
 				chunk := &world.ChunkPos{chunkPos.X() + xc, chunkPos.Z() + zc}
 
-				claimed := tryClaim(p, faction, chunk)
+				claimed := tryClaim(faction, chunk)
 				if claimed {
 					mu.Lock()
 					claimedLands++
@@ -120,7 +120,7 @@ func (c FClaimCmd) Run(src cmd.Source, o *cmd.Output) {
 			go func(zc int32) {
 				chunk := &world.ChunkPos{chunkPos.X() + start, chunkPos.Z() + zc}
 
-				claimed := tryClaim(p, faction, chunk)
+				claimed := tryClaim(faction, chunk)
 				if claimed {
 					mu.Lock()
 					claimedLands++
@@ -139,7 +139,7 @@ func (c FClaimCmd) Run(src cmd.Source, o *cmd.Output) {
 			go func(xc int32) {
 				chunk := &world.ChunkPos{chunkPos.X() + xc, chunkPos.Z() + start}
 
-				claimed := tryClaim(p, faction, chunk)
+				claimed := tryClaim(faction, chunk)
 				if claimed {
 					mu.Lock()
 					claimedLands++
@@ -165,7 +165,7 @@ func (c FClaimCmd) Run(src cmd.Source, o *cmd.Output) {
 }
 
 // tryClaim tries to claim the land, returns whether successful or not
-func tryClaim(p *player.Player, faction *factions.Faction, chunkPos *world.ChunkPos) bool {
+func tryClaim(faction *factions.Faction, chunkPos *world.ChunkPos) bool {
 	if memory.ChunkOwner(chunkPos) != nil {
 		return false
 	}

@@ -14,6 +14,7 @@ func GetAllClaims() map[world.ChunkPos]*factions.Claim {
 	claims := map[world.ChunkPos]*factions.Claim{}
 
 	rows := dragonfly.DBQuery(`SELECT * FROM "CLAIMS"`)
+	defer rows.Close()
 
 	for rows.Next() {
 		var p, owner string
@@ -21,7 +22,6 @@ func GetAllClaims() map[world.ChunkPos]*factions.Claim {
 		rows.Scan(&p, &owner, &created)
 
 		var position *world.ChunkPos
-
 		json.Unmarshal([]byte(p), &position)
 
 		claims[*position] = &factions.Claim{
@@ -40,6 +40,6 @@ func RegisterClaim(position *world.ChunkPos, owner string, created int64) {
 }
 
 // DeleteClaim deletes the claim at a location
-func DeleteClaim(pos string) {
-	dragonfly.DBExec(`DELETE FROM "CLAIMS" WHERE "POSITION" = $1`, pos)
+func DeleteClaim(chunk *world.ChunkPos) {
+	dragonfly.DBExec(`DELETE FROM "CLAIMS" WHERE "POSITION" = $1`, utils.Encode(chunk))
 }

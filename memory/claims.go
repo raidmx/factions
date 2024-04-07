@@ -52,7 +52,7 @@ func RegisterClaim(faction *factions.Faction, chunk *world.ChunkPos) {
 // DeleteClaim deletes a claim at a chunk
 func DeleteClaim(chunk *world.ChunkPos) {
 	Claims.Delete(*chunk)
-	postgres.DeleteClaim(utils.Encode(chunk))
+	postgres.DeleteClaim(chunk)
 }
 
 // FactionAt returns the faction that owns the chunk which contains a position

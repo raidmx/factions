@@ -11,6 +11,7 @@ import (
 // FPlayer returns the data from the database
 func FPlayer(p *player.Player) (fPlayer *factions.FPlayer, faction string) {
 	rows := dragonfly.DBQuery(`SELECT "FACTION", "CHANNEL" FROM "FPLAYERS" WHERE "XUID" = $1`, p.XUID())
+	defer rows.Close()
 
 	if rows.Next() {
 		var fac, channel string
@@ -54,5 +55,6 @@ func UpdateFPlayer(fPlayer *factions.FPlayer) {
 // FPlayerExists returns whether the player data exists for a player
 func FPlayerExists(xuid string) bool {
 	rows := dragonfly.DBQuery(`SELECT * FROM "FPLAYERS" WHERE "XUID" = $1`, xuid)
+	defer rows.Close()
 	return rows.Next()
 }
