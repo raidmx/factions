@@ -1,8 +1,8 @@
 package postgres
 
 import (
-	"github.com/STCraft/DFLoader/dragonfly"
 	_ "github.com/lib/pq"
+	"github.com/stcraft/loader/dragonfly"
 )
 
 // Init inits the PostGreSQL database with tables

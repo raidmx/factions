@@ -3,13 +3,13 @@ package ui
 import (
 	"fmt"
 
-	"github.com/STCraft/DFLoader/dragonfly"
-	"github.com/STCraft/Factions/config"
-	"github.com/STCraft/Factions/factions"
-	"github.com/STCraft/Factions/factions/chat"
-	"github.com/STCraft/Factions/memory"
-	"github.com/STCraft/dragonfly/server/player"
-	"github.com/STCraft/dragonfly/server/player/form"
+	"github.com/stcraft/dragonfly/server/player"
+	"github.com/stcraft/dragonfly/server/player/form"
+	"github.com/stcraft/factions/config"
+	"github.com/stcraft/factions/factions"
+	"github.com/stcraft/factions/factions/chat"
+	"github.com/stcraft/factions/memory"
+	"github.com/stcraft/loader/dragonfly"
 )
 
 type FDisbandUI struct {

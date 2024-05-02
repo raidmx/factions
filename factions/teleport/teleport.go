@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/STCraft/Factions/config"
-	"github.com/STCraft/dragonfly/server/player"
-	"github.com/STCraft/dragonfly/server/player/title"
-	"github.com/STCraft/dragonfly/server/world/particle"
 	"github.com/go-gl/mathgl/mgl64"
+	"github.com/stcraft/dragonfly/server/player"
+	"github.com/stcraft/dragonfly/server/player/title"
+	"github.com/stcraft/dragonfly/server/world/particle"
+	"github.com/stcraft/factions/config"
 )
 
 // TeleportationData contains the player undergoing teleportation's starting position, rotation

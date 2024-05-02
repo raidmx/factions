@@ -3,11 +3,11 @@ package factions
 import (
 	"math"
 
-	"github.com/STCraft/Factions/config"
-	"github.com/STCraft/Factions/factions/chat"
-	"github.com/STCraft/dragonfly/server/block/cube"
-	"github.com/STCraft/dragonfly/server/player"
-	"github.com/STCraft/dragonfly/server/world"
+	"github.com/stcraft/dragonfly/server/block/cube"
+	"github.com/stcraft/dragonfly/server/player"
+	"github.com/stcraft/dragonfly/server/world"
+	"github.com/stcraft/factions/config"
+	"github.com/stcraft/factions/factions/chat"
 )
 
 type FPlayer struct {

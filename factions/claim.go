@@ -1,7 +1,7 @@
 package factions
 
 import (
-	"github.com/STCraft/dragonfly/server/world"
+	"github.com/stcraft/dragonfly/server/world"
 )
 
 type Claim struct {

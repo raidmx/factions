@@ -3,13 +3,44 @@ package config
 import (
 	_ "embed"
 
-	"github.com/STCraft/DFLoader/config"
-	"github.com/STCraft/Factions/factions/chat"
+	"github.com/stcraft/factions/factions/chat"
 )
 
+// FactionConfig represents the main Faction configuration format
+// which contains the major configuratives to change how the faction
+// server should work.
+type FactionConfig struct {
+	DefaultDescription string `json:"default_description"`
+	InviteExpiry       int    `json:"invite_expiry"`
+	TeleportDuration   int    `json:"teleport_duration"`
+	Coleaders          int    `json:"coleader_count"`
+	Managers           int    `json:"manager_count"`
+	Officers           int    `json:"officer_count"`
+	Total              int    `json:"total_count"`
+	RadiusClaimLimit   int    `json:"claim_radius_limit"`
+	FMapRadius         int    `json:"fmap_radius"`
+	FactionPermissions struct {
+		Recruit   []string `json:"recruit"`
+		Assistant []string `json:"assistant"`
+		Officer   []string `json:"officer"`
+		Manager   []string `json:"manager"`
+		Coleader  []string `json:"coleader"`
+		Leader    []string `json:"leader"`
+	} `json:"faction_permissions"`
+	Channels struct {
+		Global    string `json:"global"`
+		Truces    string `json:"truces"`
+		Allies    string `json:"allies"`
+		Faction   string `json:"faction"`
+		Moderator string `json:"moderator"`
+	} `json:"channels"`
+}
+
 //go:embed faction.json
-var defaultFactionConfig []byte
-var factionConfig = config.New("configs", "faction.json", defaultFactionConfig)
+var defaultFc []byte
+
+// Faction is a global instance of the FactionConfig
+var Faction FactionConfig
 
 var rankIDs = map[int]string{
 	0: "recruit",
@@ -27,11 +58,6 @@ var rankNames = map[int]string{
 	3: "Manager",
 	4: "Co-Leader",
 	5: "Leader",
-}
-
-// GetFactionConfig returns the faction configuration
-func GetFactionConfig[T any](key string) T {
-	return factionConfig.Get(key).(T)
 }
 
 // RankHasPermission returns whether a Faction rank has certain permission

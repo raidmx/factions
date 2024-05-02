@@ -1,12 +1,12 @@
 package memory
 
 import (
-	"github.com/STCraft/DFLoader/dragonfly"
-	"github.com/STCraft/Factions/config"
-	"github.com/STCraft/Factions/factions"
-	"github.com/STCraft/Factions/factions/warp"
-	"github.com/STCraft/Factions/postgres"
-	"github.com/STCraft/dragonfly/server/player"
+	"github.com/stcraft/dragonfly/server/player"
+	"github.com/stcraft/factions/config"
+	"github.com/stcraft/factions/factions"
+	"github.com/stcraft/factions/factions/warp"
+	"github.com/stcraft/factions/postgres"
+	"github.com/stcraft/loader/dragonfly"
 )
 
 var Factions = map[string]*factions.Faction{}

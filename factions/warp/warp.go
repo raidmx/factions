@@ -1,9 +1,9 @@
 package warp
 
 import (
-	"github.com/STCraft/Factions/factions/teleport"
-	"github.com/STCraft/dragonfly/server/block/cube"
-	"github.com/STCraft/dragonfly/server/player"
+	"github.com/stcraft/dragonfly/server/block/cube"
+	"github.com/stcraft/dragonfly/server/player"
+	"github.com/stcraft/factions/factions/teleport"
 )
 
 type Warp struct {

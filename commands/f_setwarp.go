@@ -3,11 +3,11 @@ package commands
 import (
 	"time"
 
-	"github.com/STCraft/Factions/config"
-	"github.com/STCraft/Factions/factions/warp"
-	"github.com/STCraft/Factions/memory"
-	"github.com/STCraft/dragonfly/server/cmd"
-	"github.com/STCraft/dragonfly/server/player"
+	"github.com/stcraft/dragonfly/server/cmd"
+	"github.com/stcraft/dragonfly/server/player"
+	"github.com/stcraft/factions/config"
+	"github.com/stcraft/factions/factions/warp"
+	"github.com/stcraft/factions/memory"
 )
 
 type FSetWarpCmd struct {

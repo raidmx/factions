@@ -5,13 +5,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/STCraft/DFLoader/dragonfly"
-	"github.com/STCraft/Factions/config"
-	"github.com/STCraft/Factions/factions"
-	"github.com/STCraft/Factions/memory"
-	"github.com/STCraft/dragonfly/server/cmd"
-	"github.com/STCraft/dragonfly/server/player"
-	"github.com/STCraft/dragonfly/server/player/title"
+	"github.com/stcraft/dragonfly/server/cmd"
+	"github.com/stcraft/dragonfly/server/player"
+	"github.com/stcraft/dragonfly/server/player/title"
+	"github.com/stcraft/factions/config"
+	"github.com/stcraft/factions/factions"
+	"github.com/stcraft/factions/memory"
+	"github.com/stcraft/loader/dragonfly"
 )
 
 type FPromoteCmd struct {

@@ -1,26 +1,56 @@
 {
     "default_description": "Default faction description :(",
-
-    "invitation_expiry": 30,
+    "invite_expiry": 30,
     "teleport_duration": 5,
-
-    "number_of_coleaders": 2,
-    "number_of_managers": 5,
-    "number_of_officers": 3,
-    "total_faction_members": 25,
-
-    "radius_claim_limit": 50,
-    "default_faction_map_radius": 16,
-
+    "coleader_count": 2,
+    "manager_count": 5,
+    "officer_count": 3,
+    "total_count": 25,
+    "claim_radius_limit": 50,
+    "fmap_radius": 16,
     "faction_permissions": {
-        "recruit": ["chat", "deposit"],
-        "assistant": ["recruit", "home", "warps", "warp", "claim", "raidclaim", "autoclaim"],
-        "officer": ["assistant", "setwarp", "removewarp", "kick", "ally", "neutral", "enemy", "truce", "alert"],
-        "manager": ["officer", "sethome", "promote", "demote", "withdraw", "blacklist", "unblacklist", "desc"],
-        "coleader": ["manager", "unclaimall"],
-        "leader": ["all"]
+        "recruit": [
+            "chat",
+            "deposit"
+        ],
+        "assistant": [
+            "recruit",
+            "home",
+            "warps",
+            "warp",
+            "claim",
+            "raidclaim",
+            "autoclaim"
+        ],
+        "officer": [
+            "assistant",
+            "setwarp",
+            "removewarp",
+            "kick",
+            "ally",
+            "neutral",
+            "enemy",
+            "truce",
+            "alert"
+        ],
+        "manager": [
+            "officer",
+            "sethome",
+            "promote",
+            "demote",
+            "withdraw",
+            "blacklist",
+            "unblacklist",
+            "desc"
+        ],
+        "coleader": [
+            "manager",
+            "unclaimall"
+        ],
+        "leader": [
+            "all"
+        ]
     },
-
     "channels": {
         "global": "<%s> %s",
         "truces": "§8[§dTC§8] §f<%s> %s",

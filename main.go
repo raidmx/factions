@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/STCraft/DFLoader/dragonfly"
-	"github.com/STCraft/DFLoader/loader"
-	"github.com/STCraft/Factions/commands"
-	"github.com/STCraft/Factions/memory"
-	"github.com/STCraft/Factions/postgres"
-	"github.com/STCraft/dragonfly/server"
-	"github.com/STCraft/dragonfly/server/cmd"
+	"github.com/stcraft/dragonfly/server"
+	"github.com/stcraft/dragonfly/server/cmd"
+	"github.com/stcraft/factions/commands"
+	"github.com/stcraft/factions/memory"
+	"github.com/stcraft/factions/postgres"
+	"github.com/stcraft/loader/dragonfly"
+	"github.com/stcraft/loader/loader"
 )
 
 func main() {

@@ -1,9 +1,9 @@
 package simple
 
 import (
-	"github.com/STCraft/Factions/config"
-	"github.com/STCraft/dragonfly/server/item"
-	"github.com/STCraft/dragonfly/server/world"
+	"github.com/stcraft/dragonfly/server/item"
+	"github.com/stcraft/dragonfly/server/world"
+	"github.com/stcraft/factions/config"
 )
 
 type Obliterate struct{}

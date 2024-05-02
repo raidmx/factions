@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/STCraft/DFLoader/dragonfly"
-	"github.com/STCraft/Factions/factions"
-	"github.com/STCraft/Factions/factions/home"
-	"github.com/STCraft/Factions/factions/warp"
-	"github.com/STCraft/Factions/utils"
+	"github.com/stcraft/factions/factions"
+	"github.com/stcraft/factions/factions/home"
+	"github.com/stcraft/factions/factions/warp"
+	"github.com/stcraft/factions/utils"
+	"github.com/stcraft/loader/dragonfly"
 )
 
 // Faction returns the Faction Data from the database

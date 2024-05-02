@@ -3,8 +3,8 @@ package factions
 import (
 	"time"
 
-	"github.com/STCraft/DFLoader/dragonfly"
-	"github.com/STCraft/Factions/config"
+	"github.com/stcraft/factions/config"
+	"github.com/stcraft/loader/dragonfly"
 )
 
 // Invite sets the invite key for the player's XUID for the expiry duration

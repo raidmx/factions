@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/STCraft/DFLoader/config"
+	"github.com/stcraft/loader/config"
 )
 
 //go:embed toasts.json

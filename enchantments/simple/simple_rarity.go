@@ -1,6 +1,6 @@
 package simple
 
-import "github.com/STCraft/Factions/config"
+import "github.com/stcraft/factions/config"
 
 type SimpleRarity struct{}
 

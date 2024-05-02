@@ -4,11 +4,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/STCraft/Factions/factions"
-	"github.com/STCraft/Factions/postgres"
-	"github.com/STCraft/Factions/utils"
-	"github.com/STCraft/dragonfly/server/world"
 	"github.com/go-gl/mathgl/mgl64"
+	"github.com/stcraft/dragonfly/server/world"
+	"github.com/stcraft/factions/factions"
+	"github.com/stcraft/factions/postgres"
+	"github.com/stcraft/factions/utils"
 )
 
 var Claims = sync.Map{}

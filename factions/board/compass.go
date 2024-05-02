@@ -1,9 +1,9 @@
 package board
 
 import (
-	"github.com/STCraft/Factions/factions"
-	"github.com/STCraft/Factions/utils"
-	"github.com/STCraft/dragonfly/server/block/cube"
+	"github.com/stcraft/dragonfly/server/block/cube"
+	"github.com/stcraft/factions/factions"
+	"github.com/stcraft/factions/utils"
 )
 
 var Directions = map[cube.Direction]string{

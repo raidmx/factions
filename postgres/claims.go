@@ -3,10 +3,10 @@ package postgres
 import (
 	"encoding/json"
 
-	"github.com/STCraft/DFLoader/dragonfly"
-	"github.com/STCraft/Factions/factions"
-	"github.com/STCraft/Factions/utils"
-	"github.com/STCraft/dragonfly/server/world"
+	"github.com/stcraft/dragonfly/server/world"
+	"github.com/stcraft/factions/factions"
+	"github.com/stcraft/factions/utils"
+	"github.com/stcraft/loader/dragonfly"
 )
 
 // GetAllClaims returns all the claims from the database

@@ -3,12 +3,12 @@ package ui
 import (
 	"unicode"
 
-	"github.com/STCraft/DFLoader/dragonfly"
-	"github.com/STCraft/Factions/config"
-	"github.com/STCraft/Factions/memory"
-	"github.com/STCraft/Factions/postgres"
-	"github.com/STCraft/dragonfly/server/player"
-	"github.com/STCraft/dragonfly/server/player/form"
+	"github.com/stcraft/dragonfly/server/player"
+	"github.com/stcraft/dragonfly/server/player/form"
+	"github.com/stcraft/factions/config"
+	"github.com/stcraft/factions/memory"
+	"github.com/stcraft/factions/postgres"
+	"github.com/stcraft/loader/dragonfly"
 )
 
 type FCreateUI struct {

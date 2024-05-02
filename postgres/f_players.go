@@ -1,11 +1,11 @@
 package postgres
 
 import (
-	"github.com/STCraft/DFLoader/dragonfly"
-	"github.com/STCraft/Factions/config"
-	"github.com/STCraft/Factions/factions"
-	"github.com/STCraft/Factions/factions/chat"
-	"github.com/STCraft/dragonfly/server/player"
+	"github.com/stcraft/dragonfly/server/player"
+	"github.com/stcraft/factions/config"
+	"github.com/stcraft/factions/factions"
+	"github.com/stcraft/factions/factions/chat"
+	"github.com/stcraft/loader/dragonfly"
 )
 
 // FPlayer returns the data from the database

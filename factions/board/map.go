@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/STCraft/Factions/config"
-	"github.com/STCraft/Factions/factions"
-	"github.com/STCraft/Factions/memory"
-	"github.com/STCraft/Factions/utils"
-	"github.com/STCraft/dragonfly/server/world"
+	"github.com/stcraft/dragonfly/server/world"
+	"github.com/stcraft/factions/config"
+	"github.com/stcraft/factions/factions"
+	"github.com/stcraft/factions/memory"
+	"github.com/stcraft/factions/utils"
 )
 
 const MAP_KEY_CHARS = "\\/#?ç¬£$%=&^ABCDEFGHJKLMNOPQRSTUVWXYZÄÖÜÆØÅ1234567890abcdeghjmnopqrsuvwxyÿzäöüæøåâêîûô"

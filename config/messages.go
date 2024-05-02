@@ -3,7 +3,7 @@ package config
 import (
 	_ "embed"
 
-	"github.com/STCraft/DFLoader/config"
+	"github.com/stcraft/loader/config"
 )
 
 //go:embed messages.json
